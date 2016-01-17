@@ -15,6 +15,7 @@ public class MediumEditor extends AbstractJavaScriptComponentField<String> {
 
   private static final long serialVersionUID = 7883922298355907015L;
   
+  private boolean debugEnabled;
   private Options options;
 
   public MediumEditor() {}
@@ -31,7 +32,11 @@ public class MediumEditor extends AbstractJavaScriptComponentField<String> {
       private static final long serialVersionUID = -4238188736600311222L;
       @Override
       public void call(JsonArray args) {
-        setValue(args.getString(0));
+        String value = args.getString(0);
+        if (value != null && (value.isEmpty() || value.equals("<p><br></p>"))) {
+          value = null;
+        }
+        setValue(value);
       }
     });
   }
@@ -42,6 +47,14 @@ public class MediumEditor extends AbstractJavaScriptComponentField<String> {
 
   public void setOptions(Options options) {
     this.options = options;
+  }
+  
+  public boolean isDebugEnabled() {
+    return debugEnabled;
+  }
+
+  public void setDebugEnabled(boolean debugEnabled) {
+    this.debugEnabled = debugEnabled;
   }
 
   @Override
@@ -59,6 +72,7 @@ public class MediumEditor extends AbstractJavaScriptComponentField<String> {
     init();
     getState().value = getValue();
     getState().options = getOptions();
+    getState().debug = isDebugEnabled();
     super.attach();
   }
 
