@@ -28,16 +28,24 @@ window.com_byteowls_vaadin_medium_editor_MediumEditor = function() {
         }
       });
       
+      e.addEventListener("blur", function() {
+        var val = e.innerHTML;
+        if (loggingEnabled) {
+          console.log("medium-editor: value on blur is\n" + val);
+        }        
+        self.onValueChange(val);
+      });
+      
       mediumEditor = new MediumEditor(e, state.options);
       // maybe this event fires to often 
       // a onblur event would reduce the server roundtrips a lot
-      mediumEditor.subscribe('editableInput', function (event, editable) {
-        var val = e.innerHTML;
-        if (loggingEnabled) {
-          console.log("medium-editor: value changed to\n" + val);
-        }
-        self.onValueChange(val);
-      });
+//      mediumEditor.subscribe('editableInput', function (event, editable) {
+//        var val = e.innerHTML;
+//        if (loggingEnabled) {
+//          console.log("medium-editor: value changed to\n" + val);
+//        }
+//        self.onValueChange(val);
+//      });
     }
   };
   

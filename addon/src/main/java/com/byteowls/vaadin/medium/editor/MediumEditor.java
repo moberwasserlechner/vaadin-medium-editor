@@ -37,6 +37,7 @@ public class MediumEditor extends AbstractJavaScriptComponentField<String> {
           value = null;
         }
         setValue(value);
+        getState().value = value;
       }
     });
   }
