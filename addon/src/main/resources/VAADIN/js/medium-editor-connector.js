@@ -6,24 +6,31 @@ window.com_byteowls_vaadin_medium_editor_MediumEditor = function() {
   var self = this;
   var loggingEnabled = false;
   
+  this.setValue = function(value) {
+    if (loggingEnabled) {
+      console.log("medium-editor: setting value to\n" + value);
+    }
+    e.innerHTML =  value || "";
+  }
+  
   // called every time MediumEditorState is changed
   this.onStateChange = function() {
     var state = this.getState();
     loggingEnabled = state.loggingEnabled;
     
+//    if (loggingEnabled) {
+//      console.log("medium-editor: setting value to\n" + state.value);
+//    }
+//    e.innerHTML = state.content || "";
     
     if (typeof mediumEditor === 'undefined') {
       if (loggingEnabled) {
         console.log("medium-editor: init editor");
       }
       
-      if (loggingEnabled) {
-        console.log("medium-editor: setting value to\n" + state.value);
-      }
-      e.innerHTML = state.value || "";
-      
       e.addEventListener("keydown", function(event) {
-        if (event.which == 13 || event.keyCode == 13) {
+        // ensure that pressing return or enter creates a new line
+        if (event.which == 13 || event.keyCode == 13) { 
           event.stopPropagation();
         }
       });
@@ -47,6 +54,8 @@ window.com_byteowls_vaadin_medium_editor_MediumEditor = function() {
 //        self.onValueChange(val);
 //      });
     }
+    
+    e.setAttribute("contentEditable", !state.readonly);
   };
   
 }

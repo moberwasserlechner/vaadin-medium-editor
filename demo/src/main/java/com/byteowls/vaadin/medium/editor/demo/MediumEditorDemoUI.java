@@ -31,11 +31,11 @@ public class MediumEditorDemoUI extends UI {
     vl.addStyleName(ValoTheme.LAYOUT_WELL);
 
     preview = new Label();
-    MediumEditor me1 = new MediumEditor("Test Medium Editor");
+    MediumEditor me1 = new MediumEditor();
     me1.setSizeFull();
-    me1.setValue(Lorem.getParagraphs(2, 2));
-    me1.addValueChangeListener(e -> {
-      preview.setValue(me1.getValue());
+    me1.setContent(Lorem.getParagraphs(2, 2));
+    me1.addValueChangeListener(value -> {
+      preview.setValue(value);
     });
     vl.addComponent(me1);
     vl.addComponent(preview);
