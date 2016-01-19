@@ -21,12 +21,12 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   }
   private List<ValueChangeListener> valueChangeListeners = new ArrayList<MediumEditor.ValueChangeListener>();
 
-  private boolean loggingEnabled = false;
-  
-  public MediumEditor() {}
+  public MediumEditor() {
+    init();
+  }
   
   public void setContent(String content) {
-    callFunction("setValue", content);
+    getState().content = content;
   }
   
   public void addValueChangeListener(ValueChangeListener listener) {
@@ -34,11 +34,11 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   }
 
   public boolean isLoggingEnabled() {
-    return loggingEnabled;
+    return getState().loggingEnabled;
   }
 
   public void setLoggingEnabled(boolean loggingEnabled) {
-    this.loggingEnabled = loggingEnabled;
+    getState().loggingEnabled = loggingEnabled;
   }
   
   private void init() {
@@ -61,8 +61,6 @@ public class MediumEditor extends AbstractJavaScriptComponent {
 
   @Override
   public void attach() {
-    init();
-    getState().loggingEnabled = isLoggingEnabled();
     super.attach();
   }
   
