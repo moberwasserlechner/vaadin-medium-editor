@@ -13,7 +13,7 @@ import elemental.json.JsonArray;
 @StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css", "vaadin://mediumeditor/css/default.min.css" })
 @JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
-  
+
   private static final long serialVersionUID = -3726576588002521717L;
 
   public interface ValueChangeListener {
@@ -24,11 +24,11 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public MediumEditor() {
     init();
   }
-  
+
   public void setContent(String content) {
     getState().content = content;
   }
-  
+
   public void addValueChangeListener(ValueChangeListener listener) {
     this.valueChangeListeners.add(listener);
   }
@@ -40,7 +40,15 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public void setLoggingEnabled(boolean loggingEnabled) {
     getState().loggingEnabled = loggingEnabled;
   }
-  
+
+  public void setReadOnly(boolean readOnly) {
+    getState().readOnly = readOnly;
+  }
+
+  public boolean isReadOnly() {
+    return getState().readOnly;
+  }
+
   private void init() {
     setSizeFull();
     // this function can be called in medium-editor-connector e.g. self.onValueChange(stringValue)
@@ -63,7 +71,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public void attach() {
     super.attach();
   }
-  
+
   @Override
   protected MediumEditorState getState() {
     return (MediumEditorState) super.getState();

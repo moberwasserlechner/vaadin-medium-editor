@@ -5,14 +5,16 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
   // Please note that in JavaScript, this is not necessarily defined inside callback functions and it might therefore be necessary to assign the reference to a separate variable
   var self = this;
   var loggingEnabled = false;
+  var readOnly = false;
   
   // called every time MediumEditorState is changed
   this.onStateChange = function() {
     var state = this.getState();
     loggingEnabled = state.loggingEnabled;
+    readOnly = state.readOnly;
     
     if (loggingEnabled) {
-      console.log("medium-editor: setting value to\n" + state.value);
+      console.log("medium-editor: setting value to\n" + state.content);
     }
     e.innerHTML = state.content || "";
     
@@ -29,17 +31,26 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
       });
       
       e.addEventListener("blur", function() {
-        var val = e.innerHTML;
-        if (loggingEnabled) {
-          console.log("medium-editor: value on blur is\n" + val);
-        }        
-        self.onValueChange(val);
+        if (!readOnly) {
+          var val = e.innerHTML;
+          if (loggingEnabled) {
+            console.log("medium-editor: value on blur is\n" + val);
+          }        
+          self.onValueChange(val);
+        }
       });
       
       mediumEditor = new MediumEditor(e, state.options);
     }
     
-    e.setAttribute("contentEditable", !state.readonly);
+    if (readOnly) {
+      if (loggingEnabled) {
+        console.log("medium-editor: destroying editor because readOnly is enabled!");
+      }
+      mediumEditor.destroy();
+    } else {
+      mediumEditor.setup();
+    }
   };
   
 }

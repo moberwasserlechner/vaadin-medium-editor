@@ -20,6 +20,11 @@ public class MediumEditorField extends CustomField<String> {
     super.setPropertyDataSource(newDataSource);
     getEditor().setContent(getValue());
   }
+  
+  public void setReadOnly(boolean readOnly) {
+    super.setReadOnly(readOnly);
+    getEditor().setReadOnly(readOnly);
+  }
 
   public MediumEditor getEditor() {
     if (editor == null) {
