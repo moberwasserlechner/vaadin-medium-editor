@@ -1,4 +1,4 @@
-package com.byteowls.vaadin.medium.editor;
+package com.byteowls.vaadin.mediumeditor;
 
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;

@@ -1,4 +1,4 @@
-package com.byteowls.vaadin.medium.editor;
+package com.byteowls.vaadin.mediumeditor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import com.vaadin.ui.JavaScriptFunction;
 
 import elemental.json.JsonArray;
 
-@StyleSheet({"vaadin://css/medium-editor.min.css", "vaadin://css/default.min.css" })
-@JavaScript({ "vaadin://js/medium-editor.min.js", "vaadin://js/medium-editor-connector.js" })
+@StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css", "vaadin://mediumeditor/css/default.min.css" })
+@JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
   
   private static final long serialVersionUID = -3726576588002521717L;

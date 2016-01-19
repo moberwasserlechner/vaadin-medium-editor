@@ -1,4 +1,4 @@
-package com.byteowls.vaadin.medium.editor.demo;
+package com.byteowls.vaadin.mediumeditor.demo;
 
 import javax.servlet.annotation.WebServlet;
 

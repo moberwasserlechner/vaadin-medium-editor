@@ -1,6 +1,6 @@
-package com.byteowls.vaadin.medium.editor.demo;
+package com.byteowls.vaadin.mediumeditor.demo;
 
-import com.byteowls.vaadin.medium.editor.MediumEditor;
+import com.byteowls.vaadin.mediumeditor.MediumEditor;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;

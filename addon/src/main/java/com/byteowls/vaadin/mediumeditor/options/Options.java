@@ -1,4 +1,4 @@
-package com.byteowls.vaadin.medium.editor.option;
+package com.byteowls.vaadin.mediumeditor.options;
 
 import java.io.Serializable;
 

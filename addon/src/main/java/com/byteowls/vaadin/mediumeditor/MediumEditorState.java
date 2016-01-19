@@ -1,6 +1,6 @@
-package com.byteowls.vaadin.medium.editor;
+package com.byteowls.vaadin.mediumeditor;
 
-import com.byteowls.vaadin.medium.editor.option.Options;
+import com.byteowls.vaadin.mediumeditor.options.Options;
 import com.vaadin.shared.ui.JavaScriptComponentState;
 
 public class MediumEditorState extends JavaScriptComponentState {
