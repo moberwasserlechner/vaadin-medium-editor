@@ -5,18 +5,24 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
   // Please note that in JavaScript, this is not necessarily defined inside callback functions and it might therefore be necessary to assign the reference to a separate variable
   var self = this;
   var loggingEnabled = false;
+  var focusOutlineEnabled = true;
   var readOnly = false;
   
   // called every time MediumEditorState is changed
   this.onStateChange = function() {
     var state = this.getState();
     loggingEnabled = state.loggingEnabled;
+    focusOutlineEnabled = state.focusOutlineEnabled;
     readOnly = state.readOnly;
     
     if (loggingEnabled) {
       console.log("medium-editor: setting value to\n" + state.content);
     }
     e.innerHTML = state.content || "";
+    
+    if (!focusOutlineEnabled) {
+      e.style.outline = "none";
+    }
     
     if (typeof mediumEditor === 'undefined') {
       if (loggingEnabled) {

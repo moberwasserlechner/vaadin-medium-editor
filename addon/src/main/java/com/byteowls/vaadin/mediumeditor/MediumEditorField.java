@@ -30,6 +30,8 @@ public class MediumEditorField extends CustomField<String> {
   public MediumEditor getEditor() {
     if (editor == null) {
       editor = new MediumEditor();
+      // #7 control the border when a contenteditable gets the focus
+      editor.setFocusOutlineEnabled(false);
       editor.addValueChangeListener(new MediumEditor.ValueChangeListener() {
         @Override
         public void valueChange(String value) {

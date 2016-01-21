@@ -34,6 +34,7 @@ public class MediumEditorDemoUI extends UI {
     preview = new Label();
     MediumEditor me1 = new MediumEditor();
     me1.setSizeFull();
+    me1.setFocusOutlineEnabled(false);
     me1.setLoggingEnabled(true);
     me1.setContent(Lorem.getHtmlParagraphs(3, 3));
     me1.addValueChangeListener(value -> {

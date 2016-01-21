@@ -60,6 +60,14 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public boolean isReadOnly() {
     return getState().readOnly;
   }
+  
+  public void setFocusOutlineEnabled(boolean focusOutlineEnabled) {
+    getState().focusOutlineEnabled = focusOutlineEnabled;
+  }
+  
+  public boolean isFocusOutlineEnabled() {
+    return getState().focusOutlineEnabled;
+  }
 
   @SuppressWarnings("serial")
   private void init() {

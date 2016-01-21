@@ -9,6 +9,7 @@ public class MediumEditorState extends JavaScriptComponentState {
 
   public String content;
   public boolean loggingEnabled;
+  public boolean focusOutlineEnabled = true;
   public Options options;
 
 }
