@@ -9,6 +9,6 @@ public class MediumEditorState extends JavaScriptComponentState {
 
   public String content;
   public boolean loggingEnabled;
-  public Options options = new Options();
+  public Options options;
 
 }

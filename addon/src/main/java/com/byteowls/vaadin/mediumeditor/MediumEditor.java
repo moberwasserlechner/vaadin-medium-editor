@@ -1,8 +1,10 @@
 package com.byteowls.vaadin.mediumeditor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.byteowls.vaadin.mediumeditor.options.Options;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.ui.AbstractJavaScriptComponent;
@@ -14,22 +16,32 @@ import elemental.json.JsonArray;
 @JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
 
-  private static final long serialVersionUID = -3726576588002521717L;
+  private static final long serialVersionUID = -5253978488866030676L;
 
-  public interface ValueChangeListener {
+  public interface ValueChangeListener extends Serializable {
     void valueChange(String value);
   }
-  private List<ValueChangeListener> valueChangeListeners = new ArrayList<MediumEditor.ValueChangeListener>();
+  private List<MediumEditor.ValueChangeListener> valueChangeListeners = new ArrayList<MediumEditor.ValueChangeListener>();
 
   public MediumEditor() {
     init();
+  }
+  
+  public void configure(Options.OptionsBuilder builder) {
+    if (builder != null) {
+      getState().options = builder.build();
+    }
+  }
+  
+  public Options.OptionsBuilder options() {
+    return Options.builder();
   }
 
   public void setContent(String content) {
     getState().content = content;
   }
 
-  public void addValueChangeListener(ValueChangeListener listener) {
+  public void addValueChangeListener(MediumEditor.ValueChangeListener listener) {
     this.valueChangeListeners.add(listener);
   }
 
@@ -49,11 +61,11 @@ public class MediumEditor extends AbstractJavaScriptComponent {
     return getState().readOnly;
   }
 
+  @SuppressWarnings("serial")
   private void init() {
     setSizeFull();
     // this function can be called in medium-editor-connector e.g. self.onValueChange(stringValue)
     addFunction("onValueChange", new JavaScriptFunction() {
-      private static final long serialVersionUID = -4238188736600311222L;
       @Override
       public void call(JsonArray args) {
         String value = args.getString(0);

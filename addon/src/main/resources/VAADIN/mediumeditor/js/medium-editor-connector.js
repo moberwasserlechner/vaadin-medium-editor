@@ -40,6 +40,9 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
         }
       });
       
+      if (loggingEnabled) {
+        console.log("medium-editor: options are\n", JSON.stringify(state.options, null, 2));
+      }
       mediumEditor = new MediumEditor(e, state.options);
     }
     
