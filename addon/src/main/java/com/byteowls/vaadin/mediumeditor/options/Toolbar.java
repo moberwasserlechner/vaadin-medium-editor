@@ -98,7 +98,7 @@ public class Toolbar implements Serializable {
     }
 
     
-    public ToolbarBuilder translatedBtn(BuildInButton button, String tooltip) {
+    public ToolbarBuilder add(BuildInButton button, String tooltip) {
       ToolbarButtonBuilder tb = getExistingTb(button); 
       if (tb == null) {
         tb = ToolbarButtonBuilder.BUILDIN.get(button);
@@ -107,19 +107,6 @@ public class Toolbar implements Serializable {
       tb.aria(tooltip);
       return this;
     }
-    
-    private ToolbarButtonBuilder getExistingTb(BuildInButton button) {
-      String btnName = button.getName();
-      if (buttons != null) {
-        for (ToolbarButtonBuilder b : buttons) {
-          if (btnName.equals(b.getName())) {
-            return b;
-          }
-        }
-      }
-      return null;
-    }
-    
     
     public ToolbarBuilder buttons(BuildInButton... buttons) {
       if (buttons != null) {
@@ -257,6 +244,18 @@ public class Toolbar implements Serializable {
 
     Toolbar build() {
       return new Toolbar(this);
+    }
+    
+    ToolbarButtonBuilder getExistingTb(BuildInButton button) {
+      String btnName = button.getName();
+      if (buttons != null) {
+        for (ToolbarButtonBuilder b : buttons) {
+          if (btnName.equals(b.getName())) {
+            return b;
+          }
+        }
+      }
+      return null;
     }
 
   }
