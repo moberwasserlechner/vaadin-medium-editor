@@ -25,7 +25,7 @@ public class MediumEditorField extends CustomField<String> {
     super.setReadOnly(readOnly);
     getEditor().setReadOnly(readOnly);
   }
-
+  
   @SuppressWarnings("serial")
   public MediumEditor getEditor() {
     if (editor == null) {

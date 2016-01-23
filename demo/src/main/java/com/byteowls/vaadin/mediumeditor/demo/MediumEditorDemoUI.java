@@ -43,16 +43,13 @@ public class MediumEditorDemoUI extends UI {
     me1.configure(
         me1.options()
         .toolbar()
-        .buttons(
-            BuildInButton.BOLD, 
-            BuildInButton.ITALIC, 
-            BuildInButton.UNDERLINE, 
-            BuildInButton.ORDEREDLIST,
-            BuildInButton.UNORDEREDLIST, 
-            BuildInButton.QUOTE,
-            BuildInButton.REMOVE_FORMAT,
-            BuildInButton.ANCHOR
-            ).and()
+          .translatedBtn(BuildInButton.BOLD, "Fett")
+          .translatedBtn(BuildInButton.ITALIC, "Kursiv")
+          .translatedBtn(BuildInButton.UNDERLINE, "Unterstrichen")
+          .translatedBtn(BuildInButton.ORDEREDLIST, "Aufzaehlung")
+          .translatedBtn(BuildInButton.UNORDEREDLIST, "unordered")
+          .translatedBtn(BuildInButton.SUPERSCRIPT, "hochgestellt")
+        .and()
         .placeholder()
           .text("Hallo").and()
 //        .autoLink(true)
