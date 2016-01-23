@@ -100,8 +100,7 @@ public class Options implements Serializable {
   }
   
   public static OptionsBuilder builder() {
-    // fontawesome is on by default
-    return new Options.OptionsBuilder().fontawesomeButtonLabels();
+    return new Options.OptionsBuilder();
   }
   
   public static class OptionsBuilder {

@@ -32,32 +32,30 @@ public class MediumEditorDemoUI extends UI {
     vl.addStyleName(ValoTheme.LAYOUT_WELL);
 
     preview = new Label();
-    MediumEditor me1 = new MediumEditor();
-    me1.setSizeFull();
-    me1.setFocusOutlineEnabled(false);
-    me1.setLoggingEnabled(true);
-    me1.setContent(Lorem.getHtmlParagraphs(3, 3));
-    me1.addValueChangeListener(value -> {
+    MediumEditor editor = new MediumEditor();
+    editor.setSizeFull();
+    editor.setFocusOutlineEnabled(false);
+    editor.setLoggingEnabled(true);
+    editor.setContent(Lorem.getHtmlParagraphs(3, 3));
+    editor.addValueChangeListener(value -> {
       preview.setValue(value);
     });
-    me1.configure(
-        me1.options()
+    editor.configure(
+        MediumEditor.options()
+        .fontawesomeButtonLabels()
         .toolbar()
-          .translatedBtn(BuildInButton.BOLD, "Fett")
-          .translatedBtn(BuildInButton.ITALIC, "Kursiv")
-          .translatedBtn(BuildInButton.UNDERLINE, "Unterstrichen")
-          .translatedBtn(BuildInButton.ORDEREDLIST, "Aufzaehlung")
-          .translatedBtn(BuildInButton.UNORDEREDLIST, "unordered")
-          .translatedBtn(BuildInButton.SUPERSCRIPT, "hochgestellt")
+          .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
+          // german
+          .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
         .and()
-        .placeholder()
-          .text("Hallo").and()
+//        .placeholder()
+//          .text("Hallo").and()
 //        .autoLink(true)
         .imageDragging(false)
         );
 
 
-    vl.addComponent(me1);
+    vl.addComponent(editor);
     vl.addComponent(preview);
 
     Button btnFormatted = new Button("Preview formatted!");
@@ -75,7 +73,7 @@ public class MediumEditorDemoUI extends UI {
     vl.addComponent(btnHl);
     vl.setComponentAlignment(btnHl, Alignment.BOTTOM_CENTER);
 
-    vl.setExpandRatio(me1, 1);
+    vl.setExpandRatio(editor, 1);
     vl.setExpandRatio(preview, 1);
     vl.setExpandRatio(btnHl, 0.2f);
 

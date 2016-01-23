@@ -33,7 +33,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
     }
   }
   
-  public Options.OptionsBuilder options() {
+  public static Options.OptionsBuilder options() {
     return Options.builder();
   }
 

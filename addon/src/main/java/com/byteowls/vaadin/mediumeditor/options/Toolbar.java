@@ -12,7 +12,7 @@ public class Toolbar implements Serializable {
   private static final long serialVersionUID = -3318254088223351177L;
 
   public Boolean allowMultiParagraphSelection;
-  public List<ToolbarButton> buttons;
+  public List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
   public Integer diffLeft = null;
   public Integer diffTop = null;
   public String firstButtonClass;
@@ -28,9 +28,6 @@ public class Toolbar implements Serializable {
   private Toolbar(ToolbarBuilder builder) {
     allowMultiParagraphSelection = builder.allowMultiParagraphSelection;
     if (builder.buttons != null) {
-      if (buttons == null) {
-        buttons = new ArrayList<ToolbarButton>();
-      }
       for (ToolbarButtonBuilder tbb : builder.buttons) {
         buttons.add(tbb.build());
       }
@@ -54,7 +51,7 @@ public class Toolbar implements Serializable {
     private OptionsBuilder optionsBuilder;
     
     private Boolean allowMultiParagraphSelection;
-    private List<ToolbarButtonBuilder> buttons = new ArrayList<ToolbarButton.ToolbarButtonBuilder>();
+    private List<ToolbarButtonBuilder> buttons = new ArrayList<ToolbarButtonBuilder>();
     private Integer diffLeft = null;
     private Integer diffTop = null;
     private String firstButtonClass;
@@ -80,13 +77,34 @@ public class Toolbar implements Serializable {
       return this;
     }
     
+    /**
+     * Set the translations to the existing buttons. The order is important.
+     * @param translations
+     * @return
+     */
+    public ToolbarBuilder buttonTranslations(String... translations) {
+      if (translations != null) {
+        int cnt = 0;
+        int len = translations.length;
+        
+        for (ToolbarButtonBuilder b : buttons) {
+          if (cnt < len) {
+            b.aria(translations[cnt]);
+          }
+          cnt++;
+        }
+      }
+      return this;
+    }
+
+    
     public ToolbarBuilder translatedBtn(BuildInButton button, String tooltip) {
       ToolbarButtonBuilder tb = getExistingTb(button); 
       if (tb == null) {
         tb = ToolbarButtonBuilder.BUILDIN.get(button);
         buttons.add(tb);
       }
-      tb.tooltip(tooltip);
+      tb.aria(tooltip);
       return this;
     }
     
@@ -113,6 +131,18 @@ public class Toolbar implements Serializable {
           if (tbb != null) {
             this.buttons.add(tbb);
           }
+        }
+      }
+      return this;
+    }
+    
+    public ToolbarBuilder buttons(ToolbarButtonBuilder... toolbarButtonBuilders) {
+      if (toolbarButtonBuilders != null) {
+        if (this.buttons == null) {
+          this.buttons = new ArrayList<ToolbarButtonBuilder>();
+        }
+        for (ToolbarButtonBuilder tbb : toolbarButtonBuilders) {
+          this.buttons.add(tbb);
         }
       }
       return this;
@@ -228,6 +258,7 @@ public class Toolbar implements Serializable {
     Toolbar build() {
       return new Toolbar(this);
     }
+
   }
   
 }
