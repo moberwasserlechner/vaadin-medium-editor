@@ -44,7 +44,7 @@ jar {
     instruction 'Import-Package', '!com.google.gwt.*', '!com.vaadin.client.*', '*'
     instruction 'Bundle-Vendor', 'Michael Oberwasserlechner'
     instruction 'Bundle-Description', 'Vaadin Medium Editor'
-    instruction 'Bundle-DocURL', 'https://github.com/byteowls/vaadin-medium-editor'
+    instruction 'Bundle-DocURL', 'https://github.com/moberwasserlechner/vaadin-medium-editor'
   }
 }
 
@@ -103,9 +103,9 @@ bintray {
     name = 'vaadin-medium-editor'
     //userOrg = 'byteowls' //An optional organization name when the repo belongs to one of the user's orgs
     desc = 'Vaadin Wrapper for Medium Editor Javascript library'
-    websiteUrl = 'https://github.com/byteowls/vaadin-medium-editor'
-    issueTrackerUrl = 'https://github.com/byteowls/vaadin-medium-editor/issues'
-    vcsUrl = 'https://github.com/byteowls/vaadin-medium-editor.git'
+    websiteUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor'
+    issueTrackerUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor/issues'
+    vcsUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor.git'
     licenses = ['Apache-2.0']
     labels = ['vaadin', 'addon', 'medium-editor']
     publicDownloadNumbers = true
