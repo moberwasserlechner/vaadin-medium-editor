@@ -8,7 +8,7 @@ Vaadin 7 wrapper for the medium editor javascript library. https://github.com/ya
 * MediumEditorField for simple usage in `com.vaadin.data.fieldgroup.BeanFieldGroup<T>` or `com.vaadin.data.fieldgroup.FieldGroup` 
 * Configure the editor's options with a fluent api
 * Usage of Vaadin's FontAwesome integration, therefore no addional css file must be included. 
-* Localization of build in buttons becomes possible
+* Localization of build in buttons becomes possible. Although it must be done by yourself. Medium-Editor does not support other languages out of the box.
 
 ## MediumEditor
 
@@ -79,15 +79,15 @@ Dependency
 
 The Vaadin-Medium-Editor is only a wrapper. So if you have any feature requests or found any bugs in the javascript lib please use Medium Editor's issue tracker https://github.com/yabwe/medium-editor/issues 
 
-In all other cases please create a issue at https://github.com/byteowls/vaadin-medium-editor/issues or contribute to the project yourself. For contribution see the next section.
+In all other cases please create a issue at https://github.com/moberwasserlechner/vaadin-medium-editor/issues or contribute to the project yourself. For contribution see the next section.
 
 # Contributing
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
+2. Create your feature branch (`git checkout -b my-feature-or-bug`)
 3. Test your changes to the best of your ability.
-5. Commit your changes (`git commit -am 'Added some feature'`)
-6. Push to the branch (`git push origin my-new-feature`)
+5. Commit your changes (`git commit -am 'Describe feature or bug'`)
+6. Push to the branch (`git push origin my-feature-or-bug`)
 7. Create new Pull Request
 
 ## Code Style
@@ -96,4 +96,4 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 
 # License
 
-MIT: https://github.com/moberwasserlechner/vaadin-medium-editor/blob/master/LICENSE
+MIT: https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/LICENSE
