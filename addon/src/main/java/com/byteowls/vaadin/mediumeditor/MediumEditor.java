@@ -12,59 +12,102 @@ import com.vaadin.ui.JavaScriptFunction;
 
 import elemental.json.JsonArray;
 
+/**
+ * The Medium Editor Component.
+ * 
+ * @author Michael Oberwasserlechner
+ */
 @StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css", "vaadin://mediumeditor/css/default.min.css" })
 @JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
 
   private static final long serialVersionUID = -5253978488866030676L;
 
-  public interface ValueChangeListener extends Serializable {
+  public interface BlurListener extends Serializable {
     void valueChange(String value);
   }
-  private List<MediumEditor.ValueChangeListener> valueChangeListeners = new ArrayList<MediumEditor.ValueChangeListener>();
+  private List<MediumEditor.BlurListener> blurListeners = new ArrayList<MediumEditor.BlurListener>();
 
   public MediumEditor() {
     init();
   }
   
+  /**
+   * Configure the MediumEditor.
+   * @param builder the option builder. Start by using {@link MediumEditor#options()}.
+   */
   public void configure(Options.OptionsBuilder builder) {
     if (builder != null) {
       getState().options = builder.build();
     }
   }
   
-  public static Options.OptionsBuilder options() {
+  /**
+   * Returns the starting point for configuring the editor's options.
+   * @return the builder for configuring the editor's options
+   */
+  public Options.OptionsBuilder options() {
     return Options.builder();
   }
 
+  /**
+   * Set the content of editor
+   * @param content the editor content / value.
+   */
   public void setContent(String content) {
     getState().content = content;
   }
 
-  public void addValueChangeListener(MediumEditor.ValueChangeListener listener) {
-    this.valueChangeListeners.add(listener);
+  /**
+   * Add a listener to handle the changed value from the editor.
+   * @param listener a simple blurlistener retrieving just the value
+   */
+  public void addBlurListener(MediumEditor.BlurListener listener) {
+    this.blurListeners.add(listener);
   }
 
-  public boolean isLoggingEnabled() {
+  /**
+   * @return True if the connector's logs defined messages to "console.log" else logging is disabled.
+   */
+  public boolean isJsLoggingEnabled() {
     return getState().loggingEnabled;
   }
 
-  public void setLoggingEnabled(boolean loggingEnabled) {
-    getState().loggingEnabled = loggingEnabled;
+  /**
+   * Enable or disables the connector's logging to "console.log"
+   * @param jsLoggingEnabled If true the connector script will log defined messages to "console.log". Defaults to false. 
+   */
+  public void setJsLoggingEnabled(boolean jsLoggingEnabled) {
+    getState().loggingEnabled = jsLoggingEnabled;
   }
 
+  /**
+   * Enable or disables the inline editing.
+   * @param readOnly If true no editing is possible. Defaults to false.
+   */
   public void setReadOnly(boolean readOnly) {
     getState().readOnly = readOnly;
   }
 
+  /* (non-Javadoc)
+   * @see com.vaadin.ui.AbstractComponent#isReadOnly()
+   */
   public boolean isReadOnly() {
     return getState().readOnly;
   }
   
+  /**
+   * Enables or disables the border around the component when it gets the focus.
+   * @param focusOutlineEnabled True if a border around the component should be shown as soon as it gets the focus. If you don't like the border set it to false. Defaults to true.
+   */
   public void setFocusOutlineEnabled(boolean focusOutlineEnabled) {
     getState().focusOutlineEnabled = focusOutlineEnabled;
   }
   
+  /**
+   * If true the focus outline border is enabled else disabled.
+   * @return True if the focus outline border is enabled else false.
+   */
   public boolean isFocusOutlineEnabled() {
     return getState().focusOutlineEnabled;
   }
@@ -80,16 +123,11 @@ public class MediumEditor extends AbstractJavaScriptComponent {
         if (value != null && (value.isEmpty() || value.equals("<p><br></p>"))) {
           value = null;
         }
-        for (ValueChangeListener l : valueChangeListeners) {
+        for (BlurListener l : blurListeners) {
           l.valueChange(value);
         }
       }
     });
-  }
-
-  @Override
-  public void attach() {
-    super.attach();
   }
 
   @Override

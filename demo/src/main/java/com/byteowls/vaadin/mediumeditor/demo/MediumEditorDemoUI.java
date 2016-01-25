@@ -35,23 +35,25 @@ public class MediumEditorDemoUI extends UI {
     MediumEditor editor = new MediumEditor();
     editor.setSizeFull();
     editor.setFocusOutlineEnabled(false);
-    editor.setLoggingEnabled(true);
+    editor.setJsLoggingEnabled(true);
     editor.setContent(Lorem.getHtmlParagraphs(3, 3));
-    editor.addValueChangeListener(value -> {
+    editor.addBlurListener(value -> {
       preview.setValue(value);
     });
     editor.configure(
-        MediumEditor.options()
+        editor.options()
         .fontawesomeButtonLabels()
         .toolbar()
           .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
-          // german
+          // german button translations
           .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
-        .and()
-//        .placeholder()
-//          .text("Hallo").and()
-//        .autoLink(true)
+          .done()
+        .placeholder()
+          .text("Input prompt")
+          .done()
+        .autoLink(true)
         .imageDragging(false)
+        .done()
         );
 
 
