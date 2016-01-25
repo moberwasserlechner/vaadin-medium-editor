@@ -26,7 +26,7 @@ vaadin {
 
   addon {
     author 'Michael Oberwasserlechner'
-    license 'Apache 2.0'
+    license 'MIT'
     title 'Vaadin Medium Editor'
   }
 }
@@ -48,6 +48,9 @@ jar {
   }
 }
 
+vaadinAddonZip {
+  baseName = project.artifactId
+}
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'sources'
@@ -106,8 +109,8 @@ bintray {
     websiteUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor'
     issueTrackerUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor/issues'
     vcsUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor.git'
-    licenses = ['Apache-2.0']
-    labels = ['vaadin', 'addon', 'medium-editor']
+    licenses = ['MIT']
+    labels = ['vaadin', 'addon', 'medium-editor', 'inline editing']
     publicDownloadNumbers = true
 
     version {
