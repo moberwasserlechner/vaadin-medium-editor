@@ -220,7 +220,7 @@ public class Options implements Serializable {
     public OptionsBuilder placeholderDisabled() {
       this.placeholderEnabled = false;
       // mixing types does not work
-      return placeholder().text("").and();
+      return placeholder().text("").done();
     }
     
     public PlaceholderBuilder placeholder() {
@@ -239,7 +239,7 @@ public class Options implements Serializable {
     }
     
     public OptionsBuilder pasteHandlingDisabled() {
-      return paste().forcePlainText(false).cleanPastedHTML(false).and();
+      return paste().forcePlainText(false).cleanPastedHTML(false).done();
     }
     
     public PasteHandlerBuilder paste() {
@@ -260,6 +260,10 @@ public class Options implements Serializable {
         keyboardCommands = new KeyboardCommandsBuilder(this);
       }
       return keyboardCommands;
+    }
+    
+    public OptionsBuilder done() {
+      return this;
     }
 
     public Options build() {

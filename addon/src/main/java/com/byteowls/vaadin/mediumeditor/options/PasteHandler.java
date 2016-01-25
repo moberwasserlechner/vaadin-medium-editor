@@ -70,7 +70,7 @@ public class PasteHandler implements Serializable {
       return this;
     }
     
-    public OptionsBuilder and() {
+    public OptionsBuilder done() {
       return optionsBuilder;
     }
 

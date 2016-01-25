@@ -74,7 +74,7 @@ public class Anchor implements Serializable {
       return this;
     }
     
-    public OptionsBuilder and() {
+    public OptionsBuilder done() {
       return optionsBuilder;
     }
 

@@ -33,7 +33,7 @@ public class Placeholder implements Serializable {
       return this;
     }
     
-    public OptionsBuilder and() {
+    public OptionsBuilder done() {
       return optionsBuilder;
     }
 

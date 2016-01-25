@@ -334,7 +334,7 @@ public class ToolbarButton {
       return new ToolbarButton(this);
     }
 
-    public ToolbarBuilder and() {
+    public ToolbarBuilder done() {
       return this.toolbarBuilder;
     }
   }

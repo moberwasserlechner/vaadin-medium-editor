@@ -46,7 +46,7 @@ public class KeyboardCommands implements Serializable {
       return this;
     }
     
-    public OptionsBuilder and() {
+    public OptionsBuilder done() {
       return optionsBuilder;
     }
 
