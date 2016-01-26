@@ -31,7 +31,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public MediumEditor() {
     init();
   }
-  
+
   /**
    * Configure the MediumEditor.
    * @param builder the option builder. Start by using {@link MediumEditor#options()}.
@@ -41,7 +41,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
       getState().options = builder.build();
     }
   }
-  
+
   /**
    * Returns the starting point for configuring the editor's options.
    * @return the builder for configuring the editor's options
@@ -95,7 +95,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public boolean isReadOnly() {
     return getState().readOnly;
   }
-  
+
   /**
    * Enables or disables the border around the component when it gets the focus.
    * @param focusOutlineEnabled True if a border around the component should be shown as soon as it gets the focus. If you don't like the border set it to false. Defaults to true.
@@ -103,7 +103,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public void setFocusOutlineEnabled(boolean focusOutlineEnabled) {
     getState().focusOutlineEnabled = focusOutlineEnabled;
   }
-  
+
   /**
    * If true the focus outline border is enabled else disabled.
    * @return True if the focus outline border is enabled else false.
