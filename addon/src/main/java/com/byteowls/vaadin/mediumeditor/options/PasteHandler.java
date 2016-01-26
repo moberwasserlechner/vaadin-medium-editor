@@ -52,7 +52,7 @@ public class PasteHandler implements Serializable {
     
     public PasteHandlerBuilder cleanAttrs(String... cleanAttrs) {
       if (this.cleanAttrs == null) {
-        this.cleanAttrs = new ArrayList<String>();
+        this.cleanAttrs = new ArrayList<>();
       }
       for (String a : cleanAttrs) {
         this.cleanAttrs.add(a);
@@ -62,7 +62,7 @@ public class PasteHandler implements Serializable {
     
     public PasteHandlerBuilder cleanTags(String... cleanTags) {
       if (this.cleanTags == null) {
-        this.cleanTags = new ArrayList<String>();
+        this.cleanTags = new ArrayList<>();
       }
       for (String t : cleanTags) {
         this.cleanTags.add(t);

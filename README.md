@@ -67,7 +67,7 @@ Dependency
 ## Prerequisite
 
 ### Addon
-* JDK 6 or higher
+* JDK 7 or higher
 * Vaadin 7.4 or higher
 
 ### Demo

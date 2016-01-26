@@ -243,7 +243,7 @@ public class ToolbarButton {
     private String iconText;
     private String iconFallback;
     private String aria;
-    private List<String> tagNames = new ArrayList<String>();
+    private List<String> tagNames = new ArrayList<>();
     private String action;
     private Map<String, String> style;
     private boolean useQueryState;
@@ -281,7 +281,7 @@ public class ToolbarButton {
 
     public ToolbarButtonBuilder tagNames(String... tagNames) {
       if (this.tagNames == null) {
-        this.tagNames = new ArrayList<String>();
+        this.tagNames = new ArrayList<>();
       }
       for (String n : tagNames) {
         this.tagNames.add(n);
@@ -301,7 +301,7 @@ public class ToolbarButton {
 
     public ToolbarButtonBuilder style(String prop, String value) {
       if (this.style == null) {
-        this.style = new HashMap<String, String>();
+        this.style = new HashMap<>();
       }
       this.style.put("prop", prop);
       this.style.put("value", value);
@@ -310,7 +310,7 @@ public class ToolbarButton {
 
     public ToolbarButtonBuilder classList(String... classList) {
       if (this.classList == null) {
-        this.classList = new ArrayList<String>();
+        this.classList = new ArrayList<>();
       }
       for (String c : classList) {
         this.classList.add(c);
@@ -320,7 +320,7 @@ public class ToolbarButton {
 
     public ToolbarButtonBuilder attr(String key, String value) {
       if (this.attrs == null) {
-        this.attrs = new HashMap<String, String>();
+        this.attrs = new HashMap<>();
       }
       this.attrs.put(key, value);
       return this;

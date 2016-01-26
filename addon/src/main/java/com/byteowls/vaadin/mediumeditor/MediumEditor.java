@@ -26,7 +26,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
   public interface BlurListener extends Serializable {
     void valueChange(String value);
   }
-  private List<MediumEditor.BlurListener> blurListeners = new ArrayList<MediumEditor.BlurListener>();
+  private List<MediumEditor.BlurListener> blurListeners = new ArrayList<>();
 
   public MediumEditor() {
     init();

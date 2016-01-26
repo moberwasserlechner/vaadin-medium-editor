@@ -12,7 +12,7 @@ public class Toolbar implements Serializable {
   private static final long serialVersionUID = -3318254088223351177L;
 
   public Boolean allowMultiParagraphSelection;
-  public List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
+  public List<ToolbarButton> buttons = new ArrayList<>();
   public Integer diffLeft = null;
   public Integer diffTop = null;
   public String firstButtonClass;
@@ -51,7 +51,7 @@ public class Toolbar implements Serializable {
     private OptionsBuilder optionsBuilder;
     
     private Boolean allowMultiParagraphSelection;
-    private List<ToolbarButtonBuilder> buttons = new ArrayList<ToolbarButtonBuilder>();
+    private List<ToolbarButtonBuilder> buttons = new ArrayList<>();
     private Integer diffLeft = null;
     private Integer diffTop = null;
     private String firstButtonClass;
@@ -111,7 +111,7 @@ public class Toolbar implements Serializable {
     public ToolbarBuilder buttons(BuildInButton... buttons) {
       if (buttons != null) {
         if (this.buttons == null) {
-          this.buttons = new ArrayList<ToolbarButtonBuilder>();
+          this.buttons = new ArrayList<>();
         }
         for (BuildInButton b : buttons) {
           ToolbarButtonBuilder tbb = ToolbarButtonBuilder.BUILDIN.get(b);
@@ -126,7 +126,7 @@ public class Toolbar implements Serializable {
     public ToolbarBuilder buttons(ToolbarButtonBuilder... toolbarButtonBuilders) {
       if (toolbarButtonBuilders != null) {
         if (this.buttons == null) {
-          this.buttons = new ArrayList<ToolbarButtonBuilder>();
+          this.buttons = new ArrayList<>();
         }
         for (ToolbarButtonBuilder tbb : toolbarButtonBuilders) {
           this.buttons.add(tbb);
@@ -176,7 +176,7 @@ public class Toolbar implements Serializable {
     
     public ToolbarBuilder clearButtons() {
       if (this.buttons == null) {
-        this.buttons = new ArrayList<ToolbarButtonBuilder>();
+        this.buttons = new ArrayList<>();
       } else {
         this.buttons.clear();
       }

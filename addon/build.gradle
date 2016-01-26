@@ -5,8 +5,8 @@ plugins {
 apply plugin: 'maven-publish'
 apply plugin: 'osgi'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 eclipse {
   project {

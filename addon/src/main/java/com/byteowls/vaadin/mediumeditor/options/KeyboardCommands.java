@@ -33,7 +33,7 @@ public class KeyboardCommands implements Serializable {
     public KeyboardCommandsBuilder command(String command, String key, boolean meta, boolean shift, boolean alt) {
       if (command != null && key != null) {
         if (commands == null) {
-          commands = new ArrayList<KeyboardCommand>();
+          commands = new ArrayList<>();
         }
         KeyboardCommand c = new KeyboardCommand();
         c.command = command;
