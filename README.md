@@ -64,6 +64,16 @@ Dependency
       compile ("com.byteowls:vaadin-medium-editor:1.0.0")
     }
 
+## Prerequisite
+
+### Addon
+* JDK 6 or higher
+* Vaadin 7.4 or higher
+
+### Demo
+* JDK 8 (because of Lambdas)
+* Vaadin 7.4 or higher
+
 ## Usage
 
 ### MediumEditor
@@ -158,9 +168,28 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 6. Push to the branch (`git push origin my-feature-or-bug`)
 7. Create new Pull Request
 
+### Eclipse
+
+1. Build the Eclipse for the Addon with `./gradlew :addon:cleanEclipse :addon:eclipse`
+2. Build the Eclipse for the Addon with `./gradlew :demo:cleanEclipse :demo:eclipse`
+3. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
+
 ### Code Style
 
 Please use the sun coding convention with **2 spaces** instead of tabs for indention. Please do not use tabs at all!
+
+## Demo
+
+### Medium Editor
+
+* http://yabwe.github.io/medium-editor/
+* https://yabwe.github.io/medium-editor/demo.html
+
+### Vaadin Medium Editor
+
+1. Clone the repository
+2. Run the embedded Tomcat by `./gradlew :demo:run`
+3. It starts at `http://localhost:8080`
 
 ## License
 
