@@ -1,4 +1,4 @@
-# Vaadin Medium Editor
+# Vaadin Medium Editor [![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion)
 
 Vaadin 7 wrapper for the medium editor javascript library. https://github.com/yabwe/medium-editor
 
@@ -14,7 +14,7 @@ Vaadin 7 wrapper for the medium editor javascript library. https://github.com/ya
 
 ### Download
 
-[ ![Download](https://api.bintray.com/packages/moberwasserlechner/maven/vaadin-medium-editor/images/download.svg) ](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion)
+[![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion)
 
 ### Maven
 
