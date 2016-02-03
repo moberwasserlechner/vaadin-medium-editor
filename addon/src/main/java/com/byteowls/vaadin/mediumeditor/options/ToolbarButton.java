@@ -229,7 +229,15 @@ public class ToolbarButton {
           .tagNames("h6")
           .name(BuildInButton.H6.getName())
           .iconFallback("<b>H6</b>"));
-
+      
+      // extension
+      BUILDIN.put(BuildInButton.ANCHOR, ToolbarButton.builder()
+          .icon(FontAwesome.LINK)
+          .action("createLink")
+          .aria("link")
+          .tagNames("a")
+          .name(BuildInButton.ANCHOR.getName())
+          .iconFallback("<b>#</b>"));
     }
 
     public static ToolbarButtonBuilder getBuildin(BuildInButton buildInButton) {
