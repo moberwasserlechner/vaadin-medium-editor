@@ -27,8 +27,12 @@ vaadin {
   addon {
     author 'Michael Oberwasserlechner'
     license 'MIT'
-    title 'Vaadin Medium Editor'
+    title 'Medium Editor wrapper'
   }
+}
+
+dependencies {
+  testCompile "junit:junit:4.12"
 }
 
 jar {
@@ -43,7 +47,7 @@ jar {
     name = 'vaadin-medium-editor'
     instruction 'Import-Package', '!com.google.gwt.*', '!com.vaadin.client.*', '*'
     instruction 'Bundle-Vendor', 'Michael Oberwasserlechner'
-    instruction 'Bundle-Description', 'Vaadin Medium Editor'
+    instruction 'Bundle-Description', 'Medium Editor wrapper'
     instruction 'Bundle-DocURL', 'https://github.com/moberwasserlechner/vaadin-medium-editor'
   }
 }
@@ -51,6 +55,15 @@ jar {
 vaadinAddonZip {
   baseName = project.artifactId
 }
+
+vaadinJavadocJar {
+  baseName = project.artifactId
+}
+
+vaadinSourcesJar {
+  baseName = project.artifactId
+}
+
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
   classifier = 'sources'

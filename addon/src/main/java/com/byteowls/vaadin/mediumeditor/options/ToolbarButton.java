@@ -1,5 +1,6 @@
 package com.byteowls.vaadin.mediumeditor.options;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,9 @@ import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.FontIcon;
 
-public class ToolbarButton {
+public class ToolbarButton implements Serializable {
+
+  private static final long serialVersionUID = -8549658939678510199L;
 
   public String name;
   public String action;
@@ -229,7 +232,15 @@ public class ToolbarButton {
           .tagNames("h6")
           .name(BuildInButton.H6.getName())
           .iconFallback("<b>H6</b>"));
-
+      
+      // extension
+      BUILDIN.put(BuildInButton.ANCHOR, ToolbarButton.builder()
+          .icon(FontAwesome.LINK)
+          .action("createLink")
+          .aria("link")
+          .tagNames("a")
+          .name(BuildInButton.ANCHOR.getName())
+          .iconFallback("<b>#</b>"));
     }
 
     public static ToolbarButtonBuilder getBuildin(BuildInButton buildInButton) {

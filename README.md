@@ -16,6 +16,13 @@ Vaadin 7 wrapper for the medium editor javascript library. https://github.com/ya
 
 [![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion)
 
+### Vaadin Directory
+
+Get the addon from 
+https://vaadin.com/directory#!addon/medium-editor-wrapper. 
+
+Vaadin runs its own Maven repository and you can download the addon there as well, but you will need to create a free vaadin account first.
+
 ### Maven
 
 Repository
@@ -39,7 +46,7 @@ Dependency
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
       </dependency>
     </dependencies>
 
@@ -61,7 +68,7 @@ Repository
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.0.0")
+      compile ("com.byteowls:vaadin-medium-editor:1.0.1")
     }
 
 ## Prerequisite
@@ -159,7 +166,7 @@ The Vaadin-Medium-Editor is only a wrapper. So if you have any feature requests 
 
 In all other cases please create a issue at https://github.com/moberwasserlechner/vaadin-medium-editor/issues or contribute to the project yourself. For contribution see the next section.
 
-## Contributing
+## Contribute
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-feature-or-bug`)
@@ -193,4 +200,8 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 
 ## License
 
-MIT: https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/LICENSE
+MIT. Please see [LICENSE](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/LICENSE).
+
+## Change Log
+
+Please see [CHANGELOG](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/CHANGELOG.md).

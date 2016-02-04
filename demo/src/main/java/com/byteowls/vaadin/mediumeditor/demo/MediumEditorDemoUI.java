@@ -11,6 +11,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -32,11 +33,13 @@ public class MediumEditorDemoUI extends UI {
 
     VerticalLayout vl = new VerticalLayout();
     vl.setMargin(true);
+    vl.setSpacing(true);
     vl.setSizeFull();
-    vl.addStyleName(ValoTheme.LAYOUT_WELL);
 
     preview = new Label();
     preview.setContentMode(ContentMode.HTML);
+    Panel previewPanel = new Panel(preview);
+    previewPanel.setSizeFull();
     
     MediumEditor e1 = new MediumEditor();
     e1.setSizeFull();
@@ -62,6 +65,9 @@ public class MediumEditorDemoUI extends UI {
         .done()
         );
     
+    Panel p1 = new Panel(e1);
+    p1.setSizeFull();
+    
     MediumEditor e2 = new MediumEditor();
     e2.setSizeFull();
     e2.setContent(Lorem.getHtmlParagraphs(1, 2));
@@ -72,20 +78,22 @@ public class MediumEditorDemoUI extends UI {
         e2.options()
         .fontawesomeButtonLabels()
         .toolbar()
-          .defaultButtons()
-          .add(BuildInButton.ORDEREDLIST, "Aufzaehlung")
+          .allButtons()
           .done()
         .imageDragging(false)
         .done()
         );
+    
+    Panel p2 = new Panel(e2);
+    p2.setSizeFull();
+    
 
-    HorizontalLayout editorHl = new HorizontalLayout(e1, e2);
-    editorHl.addStyleName(ValoTheme.LAYOUT_CARD);
+    HorizontalLayout editorHl = new HorizontalLayout(p1, p2);
     editorHl.setSpacing(true);
     editorHl.setSizeFull();
 
     vl.addComponent(editorHl);
-    vl.addComponent(preview);
+    vl.addComponent(previewPanel);
 
     btnFormatted = new Button("Preview formatted!");
     btnFormatted.addStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -113,7 +121,7 @@ public class MediumEditorDemoUI extends UI {
     vl.setComponentAlignment(btnHl, Alignment.BOTTOM_CENTER);
 
     vl.setExpandRatio(editorHl, 1);
-    vl.setExpandRatio(preview, 1);
+    vl.setExpandRatio(previewPanel, 1);
     vl.setExpandRatio(btnHl, 0.2f);
 
     setContent(vl);

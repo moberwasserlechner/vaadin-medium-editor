@@ -77,10 +77,17 @@ public class Toolbar implements Serializable {
       return this;
     }
     
+    public ToolbarBuilder allButtons() {
+      for (BuildInButton b : BuildInButton.values()) {
+        button(b);
+      }
+      return this;
+    }
+    
     /**
      * Set the translations to the existing buttons. The order is important.
-     * @param translations
-     * @return
+     * @param translations the already added button's translations 
+     * @return the {@link ToolbarBuilder} for chaining
      */
     public ToolbarBuilder buttonTranslations(String... translations) {
       if (translations != null) {
@@ -96,15 +103,20 @@ public class Toolbar implements Serializable {
       }
       return this;
     }
-
     
-    public ToolbarBuilder add(BuildInButton button, String tooltip) {
+    public ToolbarBuilder button(BuildInButton button) {
+      return button(button, null);
+    }
+    
+    public ToolbarBuilder button(BuildInButton button, String tooltip) {
       ToolbarButtonBuilder tb = getExistingTb(button); 
       if (tb == null) {
         tb = ToolbarButtonBuilder.BUILDIN.get(button);
         buttons.add(tb);
       }
-      tb.aria(tooltip);
+      if (tooltip != null) {
+        tb.aria(tooltip);
+      }
       return this;
     }
     
