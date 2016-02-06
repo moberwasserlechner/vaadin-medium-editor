@@ -19,7 +19,7 @@ vaadin {
   vaadin.version = "${vaadinVersion}"
   vaadin.debug = false
   vaadin.manageWidgetset = true
-  vaadin.manageDependencies = false
+  vaadin.manageDependencies = true
 
   vaadin.plugin.logToConsole = true
   vaadin.plugin.eclipseOutputDir = "bin/"
