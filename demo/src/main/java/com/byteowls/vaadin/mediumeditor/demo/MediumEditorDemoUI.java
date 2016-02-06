@@ -40,12 +40,13 @@ public class MediumEditorDemoUI extends UI {
     preview.setContentMode(ContentMode.HTML);
     Panel previewPanel = new Panel(preview);
     previewPanel.setSizeFull();
+    previewPanel.setCaption("Preview");
     
     MediumEditor e1 = new MediumEditor();
     e1.setSizeFull();
     e1.setFocusOutlineEnabled(false);
     e1.setJsLoggingEnabled(true);
-    e1.setContent(Lorem.getHtmlParagraphs(1, 3));
+    e1.setContent(Lorem.getHtmlParagraphs(3, 5));
     e1.addBlurListener(value -> {
       preview.setValue(value);
     });
@@ -57,20 +58,18 @@ public class MediumEditorDemoUI extends UI {
           // german button translations
           .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
           .done()
-        .placeholder()
-          .text("Input prompt")
-          .done()
         .autoLink(true)
         .imageDragging(false)
         .done()
         );
     
     Panel p1 = new Panel(e1);
+    p1.setCaption("Simple editor");
     p1.setSizeFull();
     
     MediumEditor e2 = new MediumEditor();
     e2.setSizeFull();
-    e2.setContent(Lorem.getHtmlParagraphs(1, 2));
+    e2.setContent(Lorem.getHtmlParagraphs(2, 5));
     e2.addBlurListener(value -> {
       preview.setValue(value);
     });
@@ -80,11 +79,15 @@ public class MediumEditorDemoUI extends UI {
         .toolbar()
           .allButtons()
           .done()
+        .placeholder()
+          .text("Input prompt")
+          .done()
         .imageDragging(false)
-        .done()
+          .done()
         );
     
     Panel p2 = new Panel(e2);
+    p2.setCaption("Editor with all buildin buttons");
     p2.setSizeFull();
     
 
