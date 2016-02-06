@@ -46,7 +46,7 @@ Dependency
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
       </dependency>
     </dependencies>
 
@@ -68,7 +68,7 @@ Repository
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.0.1")
+      compile ("com.byteowls:vaadin-medium-editor:1.0.2")
     }
 
 ## Prerequisite
@@ -177,9 +177,8 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 
 ### Eclipse
 
-1. Build the Eclipse for the Addon with `./gradlew :addon:cleanEclipse :addon:eclipse`
-2. Build the Eclipse for the Addon with `./gradlew :demo:cleanEclipse :demo:eclipse`
-3. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
+1. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
+2. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
 
 ### Code Style
 
@@ -194,9 +193,14 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 
 ### Vaadin Medium Editor
 
+**Run it yourself**
 1. Clone the repository
 2. Run the embedded Tomcat by `./gradlew :demo:run`
 3. It starts at `http://localhost:8080`
+
+**Live Demo**
+
+http://moberwasserlechner.jelastic.servint.net/vaadin-medium-editor/
 
 ## License
 
