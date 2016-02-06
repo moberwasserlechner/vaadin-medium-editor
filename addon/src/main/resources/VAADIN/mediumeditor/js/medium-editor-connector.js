@@ -29,17 +29,17 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
         console.log("medium-editor: init editor");
       }
 
-      // #13 enable text selection on contenteditable for Safari
+      // #12 enable text selection on contenteditable for Safari
       if (loggingEnabled) {
-        console.log("medium-editor: enable user-select");
+        console.log("medium-editor: enable user-select on contenteditable div because it might be deactivated by valo");
       }
       e.style.webkitUserSelect = "text";
       e.style.userSelect = "text";
       e.style.MozUserSelect = "text";
       e.style.msUserSelect = "text"; // For IE10+
-
+      
+      // ensure that pressing return or enter creates a new line
       e.addEventListener("keydown", function(event) {
-        // ensure that pressing return or enter creates a new line
         if (event.which == 13 || event.keyCode == 13) { 
           event.stopPropagation();
         }
