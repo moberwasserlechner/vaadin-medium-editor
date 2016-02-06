@@ -1,5 +1,9 @@
 # Changelog
 
+### [1.0.2](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.0.1...1.0.2)
+
+* Fix problem in Safari because of user-select=none on Valo Theme v-app style.
+
 ### [1.0.1](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.0.0...1.0.1)
 
 * Fix vaadin directory upload restrictions
