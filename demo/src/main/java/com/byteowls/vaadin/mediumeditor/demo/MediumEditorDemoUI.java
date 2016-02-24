@@ -1,5 +1,7 @@
 package com.byteowls.vaadin.mediumeditor.demo;
 
+import java.util.Locale;
+
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
 import com.byteowls.vaadin.mediumeditor.options.BuildInButton;
 import com.thedeanda.lorem.Lorem;
@@ -55,8 +57,8 @@ public class MediumEditorDemoUI extends UI {
         .fontawesomeButtonLabels()
         .toolbar()
           .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
-          // german button translations
-          .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
+          // numberic button translations ;)
+          .buttonTranslations("1", "2", "3", "4")
           .done()
         .autoLink(true)
         .imageDragging(false)
@@ -75,6 +77,7 @@ public class MediumEditorDemoUI extends UI {
     });
     e2.configure(
         e2.options()
+        .locale(Locale.GERMAN)
         .fontawesomeButtonLabels()
         .toolbar()
           .allButtons()

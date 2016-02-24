@@ -34,7 +34,12 @@ public class ToolbarButton implements Serializable {
       }
     }
     contentDefault = builder.iconFallback;
-    aria = builder.aria;
+    if (builder.customTranslation) {
+      aria = builder.aria;
+    } else {
+      // get buildin translations
+      aria = builder.toolbarBuilder.getOptionsBuilder().getTranslation(builder.aria);
+    }
     name = builder.name;
     action = builder.action;
     if (action == null) {
@@ -56,7 +61,7 @@ public class ToolbarButton implements Serializable {
   }
 
   public static class ToolbarButtonBuilder {
-    public static Map<BuildInButton, ToolbarButtonBuilder> BUILDIN;
+    private static Map<BuildInButton, ToolbarButtonBuilder> BUILDIN;
     static {
       BUILDIN = new HashMap<BuildInButton, ToolbarButtonBuilder>();
       BUILDIN.put(BuildInButton.BOLD, ToolbarButton.builder()
@@ -85,7 +90,7 @@ public class ToolbarButton implements Serializable {
           .iconFallback("<b><u>U</u></b>"));
       BUILDIN.put(BuildInButton.STRIKETHROUGH, ToolbarButton.builder()
           .icon(FontAwesome.STRIKETHROUGH)
-          .aria("strike through")
+          .aria("strikethrough")
           .name(BuildInButton.STRIKETHROUGH.getName())
           .tagNames("strike")
           .style("text-decoration", "line-through")
@@ -112,7 +117,7 @@ public class ToolbarButton implements Serializable {
 
       BUILDIN.put(BuildInButton.ORDEREDLIST, ToolbarButton.builder()
           .icon(FontAwesome.LIST_OL)
-          .aria("ordered list")
+          .aria("orderedlist")
           .action("insertorderedlist")
           .name(BuildInButton.ORDEREDLIST.getName())
           .tagNames("ol")
@@ -120,7 +125,7 @@ public class ToolbarButton implements Serializable {
           .iconFallback("<b>1.</b>"));
       BUILDIN.put(BuildInButton.UNORDEREDLIST, ToolbarButton.builder()
           .icon(FontAwesome.LIST_UL)
-          .aria("unordered list")
+          .aria("unorderedlist")
           .action("insertunorderedlist")
           .name(BuildInButton.UNORDEREDLIST.getName())
           .tagNames("ol")
@@ -140,32 +145,32 @@ public class ToolbarButton implements Serializable {
 
       BUILDIN.put(BuildInButton.JUSTIFY_FULL, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_JUSTIFY)
-          .aria("align justify")
+          .aria("alignjustify")
           .style("text-align", "justify")
           .name(BuildInButton.JUSTIFY_FULL.getName())
           .iconFallback("<b>J</b>"));
       BUILDIN.put(BuildInButton.JUSTIFY_LEFT, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_LEFT)
-          .aria("align left")
+          .aria("alignleft")
           .style("text-align", "left")
           .name(BuildInButton.JUSTIFY_LEFT.getName())
           .iconFallback("<b>L</b>"));
       BUILDIN.put(BuildInButton.JUSTIFY_CENTER, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_CENTER)
-          .aria("align center")
+          .aria("aligncenter")
           .style("text-align", "center")
           .name(BuildInButton.JUSTIFY_CENTER.getName())
           .iconFallback("<b>C</b>"));
       BUILDIN.put(BuildInButton.JUSTIFY_RIGHT, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_RIGHT)
-          .aria("align right")
+          .aria("alignright")
           .style("text-align", "right")
           .name(BuildInButton.JUSTIFY_RIGHT.getName())
           .iconFallback("<b>R</b>"));
 
       BUILDIN.put(BuildInButton.REMOVE_FORMAT, ToolbarButton.builder()
           .icon(FontAwesome.ERASER)
-          .aria("remove formatting")
+          .aria("removeformatting")
           .name(BuildInButton.REMOVE_FORMAT.getName())
           .iconFallback("<b>&ldquo;</b>")); 
 
@@ -180,7 +185,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.PRE, ToolbarButton.builder()
           .icon(FontAwesome.CODE)
           .action("append-pre")
-          .aria("preformatted text")
+          .aria("preformattedtext")
           .tagNames("pre")
           .name(BuildInButton.PRE.getName())
           .iconFallback("<b>0101</b>"));
@@ -188,7 +193,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H1, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>1</sup>")
           .action("append-h1")
-          .aria("header type one")
+          .aria("headertype1")
           .tagNames("h1")
           .name(BuildInButton.H1.getName())
           .iconFallback("<b>H1</b>"));
@@ -196,7 +201,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H2, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>2</sup>")
           .action("append-h2")
-          .aria("header type two")
+          .aria("headertype2")
           .tagNames("h2")
           .name(BuildInButton.H2.getName())
           .iconFallback("<b>H2</b>"));
@@ -204,7 +209,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H3, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>3</sup>")
           .action("append-h3")
-          .aria("header type three")
+          .aria("headertype3")
           .tagNames("h3")
           .name(BuildInButton.H3.getName())
           .iconFallback("<b>H3</b>"));
@@ -212,7 +217,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H4, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>4</sup>")
           .action("append-h4")
-          .aria("header type four")
+          .aria("headertype4")
           .tagNames("h4")
           .name(BuildInButton.H4.getName())
           .iconFallback("<b>H4</b>"));
@@ -220,7 +225,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H5, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>5</sup>")
           .action("append-h5")
-          .aria("header type five")
+          .aria("headertype5")
           .tagNames("h5")
           .name(BuildInButton.H5.getName())
           .iconFallback("<b>H5</b>"));
@@ -228,7 +233,7 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(BuildInButton.H6, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>6</sup>")
           .action("append-h6")
-          .aria("header type six")
+          .aria("headertype6")
           .tagNames("h6")
           .name(BuildInButton.H6.getName())
           .iconFallback("<b>H6</b>"));
@@ -243,8 +248,39 @@ public class ToolbarButton implements Serializable {
           .iconFallback("<b>#</b>"));
     }
 
+    /**
+     * Gets a copy of the buildin button, which might be changed.
+     * @param buildInButton the {@link BuildInButton} enum
+     * @return a copy of the buildin button builder.
+     */
     public static ToolbarButtonBuilder getBuildin(BuildInButton buildInButton) {
-      return BUILDIN.get(buildInButton);
+      ToolbarButtonBuilder buildinBuilder = BUILDIN.get(buildInButton);
+      return buildinBuilder.copy();
+    }
+
+    private ToolbarButtonBuilder copy() {
+      ToolbarButtonBuilder b = ToolbarButton.builder(toolbarBuilder);
+      b.icon = this.icon;
+      b.iconText = this.iconText;
+      b.action = this.action;
+      b.customTranslation = this.customTranslation;
+      b.aria = this.aria;
+      if (this.tagNames != null) {
+        b.tagNames = new ArrayList<>(this.tagNames);
+      }
+      b.name = this.name;
+      b.useQueryState = this.useQueryState;
+      b.iconFallback = this.iconFallback;
+      if (this.style != null) {
+        b.style = new HashMap<>(this.style);
+      }
+      if (this.classList != null) {
+        b.classList = new ArrayList<>(this.classList);
+      }
+      if (this.attrs != null) {
+        b.attrs = new HashMap<>(this.attrs);
+      }
+      return b;
     }
 
     private ToolbarBuilder toolbarBuilder;
@@ -253,6 +289,7 @@ public class ToolbarButton implements Serializable {
     private FontIcon icon;
     private String iconText;
     private String iconFallback;
+    private boolean customTranslation;
     private String aria;
     private List<String> tagNames = new ArrayList<>();
     private String action;
@@ -260,7 +297,7 @@ public class ToolbarButton implements Serializable {
     private boolean useQueryState;
     private List<String> classList;
     private Map<String, String> attrs;
-
+    
     public String getName() {
       return name;
     }
@@ -286,6 +323,11 @@ public class ToolbarButton implements Serializable {
     }
 
     public ToolbarButtonBuilder aria(String aria) {
+      return aria(aria, false);
+    }
+    
+    public ToolbarButtonBuilder aria(String aria, boolean customTranslation) {
+      this.customTranslation = customTranslation;
       this.aria = aria;
       return this;
     }
@@ -340,14 +382,20 @@ public class ToolbarButton implements Serializable {
     public ToolbarButtonBuilder(ToolbarBuilder toolbarBuilder) {
       this.toolbarBuilder = toolbarBuilder;
     }
+    
+    public ToolbarButtonBuilder parentBuilder(ToolbarBuilder toolbarBuilder) {
+      this.toolbarBuilder = toolbarBuilder;
+      return this;
+    }
 
-    public ToolbarButton build() {
+    protected ToolbarButton build() {
       return new ToolbarButton(this);
     }
 
     public ToolbarBuilder done() {
       return this.toolbarBuilder;
     }
+
   }
 
   @Override

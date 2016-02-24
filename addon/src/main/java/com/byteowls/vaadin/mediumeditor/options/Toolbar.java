@@ -41,6 +41,7 @@ public class Toolbar implements Serializable {
     align = builder.align;
     sticky = builder.sticky;
     updateOnEmptySelection = builder.updateOnEmptySelection;
+    
   }
   
   public static ToolbarBuilder builder(OptionsBuilder optionsBuilder) {
@@ -62,9 +63,12 @@ public class Toolbar implements Serializable {
     private Boolean sticky;
     private Boolean updateOnEmptySelection;
     
-    
     public ToolbarBuilder(OptionsBuilder optionsBuilder) {
       this.optionsBuilder = optionsBuilder;
+    }
+    
+    OptionsBuilder getOptionsBuilder() {
+      return this.optionsBuilder;
     }
     
     public ToolbarBuilder allowMultiParagraphSelection(boolean allowMultiParagraphSelection) {
@@ -96,7 +100,7 @@ public class Toolbar implements Serializable {
         
         for (ToolbarButtonBuilder b : buttons) {
           if (cnt < len) {
-            b.aria(translations[cnt]);
+            b.aria(translations[cnt], true);
           }
           cnt++;
         }
@@ -109,13 +113,14 @@ public class Toolbar implements Serializable {
     }
     
     public ToolbarBuilder button(BuildInButton button, String tooltip) {
-      ToolbarButtonBuilder tb = getExistingTb(button); 
+      ToolbarButtonBuilder tb = getExistingTb(button);
       if (tb == null) {
-        tb = ToolbarButtonBuilder.BUILDIN.get(button);
+        tb = ToolbarButtonBuilder.getBuildin(button);
+        tb.parentBuilder(this);
         buttons.add(tb);
       }
       if (tooltip != null) {
-        tb.aria(tooltip);
+        tb.aria(tooltip, true);
       }
       return this;
     }
@@ -126,10 +131,7 @@ public class Toolbar implements Serializable {
           this.buttons = new ArrayList<>();
         }
         for (BuildInButton b : buttons) {
-          ToolbarButtonBuilder tbb = ToolbarButtonBuilder.BUILDIN.get(b);
-          if (tbb != null) {
-            this.buttons.add(tbb);
-          }
+          button(b);
         }
       }
       return this;
@@ -152,8 +154,10 @@ public class Toolbar implements Serializable {
         if (before == null) {
           buttons(incoming);
         } else {
-          ToolbarButtonBuilder beforeTb = ToolbarButtonBuilder.BUILDIN.get(before);
-          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.BUILDIN.get(incoming);
+          ToolbarButtonBuilder beforeTb = ToolbarButtonBuilder.getBuildin(before);
+          beforeTb.parentBuilder(this);
+          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.getBuildin(incoming);
+          incomingTb.parentBuilder(this);
           
           int beforeIdx = buttons.indexOf(beforeTb);
           int insertIdx = --beforeIdx;
@@ -171,8 +175,10 @@ public class Toolbar implements Serializable {
         if (after == null) {
           buttons(incoming);
         } else {
-          ToolbarButtonBuilder afterTb = ToolbarButtonBuilder.BUILDIN.get(after);
-          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.BUILDIN.get(incoming);
+          ToolbarButtonBuilder afterTb = ToolbarButtonBuilder.getBuildin(after);
+          afterTb.parentBuilder(this);
+          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.getBuildin(incoming);
+          incomingTb.parentBuilder(this);
           
           int afterIdx = buttons.indexOf(afterTb);
           int insertIdx = afterIdx++;
