@@ -209,6 +209,7 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 ### Vaadin Medium Editor
 
 **Run it yourself**
+
 1. Clone the repository
 2. Run the embedded Tomcat by `./gradlew :demo:run`
 3. It starts at `http://localhost:8080`
