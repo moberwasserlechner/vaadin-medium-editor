@@ -175,6 +175,21 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 6. Push to the branch (`git push origin my-feature-or-bug`)
 7. Create new Pull Request
 
+### Translations
+
+Additional languages are very welcome. Thanks in advance :).
+
+ResourceBundles with properties files for the actual translations are used. They are located at
+
+    https://github.com/moberwasserlechner/vaadin-medium-editor/tree/develop/addon/src/main/resources/com/byteowls/vaadin/mediumeditor/options
+ 
+
+Supported languages are:
+
+* English (fallback)
+* German
+ 
+
 ### Eclipse
 
 1. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
