@@ -11,6 +11,7 @@ import com.byteowls.vaadin.mediumeditor.options.KeyboardCommands.KeyboardCommand
 import com.byteowls.vaadin.mediumeditor.options.PasteHandler.PasteHandlerBuilder;
 import com.byteowls.vaadin.mediumeditor.options.Placeholder.PlaceholderBuilder;
 import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
+import com.vaadin.ui.UI;
 
 
 public class Options implements Serializable {
@@ -108,9 +109,10 @@ public class Options implements Serializable {
 
   public static class OptionsBuilder {
 
+    private static final String BUTTON_LABEL_FONTAWESOME = "fontawesome";
     private static final String RESOURCE_BUNDLE_BASENAME = "com/byteowls/vaadin/mediumeditor/options/i18n";
     private String activeButtonClass;
-    private Object buttonLabels;
+    private Object buttonLabels = BUTTON_LABEL_FONTAWESOME;
     private Integer delay = null;
     private Boolean disableReturn;
     private Boolean disableDoubleReturn;
@@ -157,10 +159,17 @@ public class Options implements Serializable {
 
     public String getTranslation(String code) {
       if (bundle == null) {
-        if (useDefaultLocaleFallback) {
-          bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASENAME, this.locale);
+        Locale l = this.locale;
+        if (l == null && UI.getCurrent() != null) {
+          l = UI.getCurrent().getLocale();
         } else {
-          bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASENAME, locale, Control.getNoFallbackControl(Control.FORMAT_PROPERTIES));
+          l = Locale.getDefault();
+        }
+
+        if (useDefaultLocaleFallback) {
+          bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASENAME, l);
+        } else {
+          bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASENAME, l, Control.getNoFallbackControl(Control.FORMAT_PROPERTIES));
         }
       }
       return bundle.getString(code);
@@ -172,7 +181,7 @@ public class Options implements Serializable {
     }
 
     public OptionsBuilder fontawesomeButtonLabels() {
-      this.buttonLabels = "fontawesome";
+      this.buttonLabels = BUTTON_LABEL_FONTAWESOME;
       return this;
     }
 

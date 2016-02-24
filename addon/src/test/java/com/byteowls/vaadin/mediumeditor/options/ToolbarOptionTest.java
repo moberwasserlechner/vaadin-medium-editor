@@ -69,13 +69,12 @@ public class ToolbarOptionTest {
     MediumEditor e2 = new MediumEditor();
     Options options = e2.options()
     .locale(Locale.CHINESE)
-    .fontawesomeButtonLabels()
     .toolbar()
     .button(BuildInButton.BOLD)
     .done().build();
     
     for (ToolbarButton b : options.toolbar.buttons) {
-      Assert.assertEquals("bold", b.aria);
+      Assert.assertEquals("Bold", b.aria);
     }
   }
   
