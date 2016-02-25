@@ -17,6 +17,13 @@ public class MediumEditorField extends CustomField<String> {
   private MediumEditor editor;
   
   /**
+   * Initialize a field without a caption.
+   */
+  public MediumEditorField() {
+    super();
+  }
+  
+  /**
    * Initialize a field with a caption.
    * @param caption the field's caption.
    */
@@ -30,7 +37,8 @@ public class MediumEditorField extends CustomField<String> {
     super.setPropertyDataSource(newDataSource);
     getEditor().setContent(getValue());
   }
-  
+
+  @Override
   public void setReadOnly(boolean readOnly) {
     super.setReadOnly(readOnly);
     getEditor().setReadOnly(readOnly);
