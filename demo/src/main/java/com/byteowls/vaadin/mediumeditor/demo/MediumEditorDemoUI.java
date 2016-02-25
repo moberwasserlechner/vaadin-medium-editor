@@ -3,7 +3,7 @@ package com.byteowls.vaadin.mediumeditor.demo;
 import java.util.Locale;
 
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
-import com.byteowls.vaadin.mediumeditor.options.BuildInButton;
+import com.byteowls.vaadin.mediumeditor.options.Buttons;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -56,7 +56,7 @@ public class MediumEditorDemoUI extends UI {
         e1.options()
         .fontawesomeButtonLabels()
         .toolbar()
-          .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
+          .buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.H1, Buttons.JUSTIFY_CENTER)
           // numberic button translations ;)
           .buttonTranslations("1", "2", "3", "4")
           .done()

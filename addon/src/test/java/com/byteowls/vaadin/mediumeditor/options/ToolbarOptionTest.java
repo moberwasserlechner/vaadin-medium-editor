@@ -41,7 +41,7 @@ public class ToolbarOptionTest {
     .useDefaultLocaleFallback(true) // Locale.getLocale()
     .fontawesomeButtonLabels()
     .toolbar()
-    .button(BuildInButton.BOLD)
+    .button(Buttons.BOLD)
     .done().build();
     
     for (ToolbarButton b : options.toolbar.buttons) {
@@ -56,7 +56,7 @@ public class ToolbarOptionTest {
     .locale(Locale.GERMAN)
     .fontawesomeButtonLabels()
     .toolbar()
-    .button(BuildInButton.BOLD)
+    .button(Buttons.BOLD)
     .done().build();
     
     for (ToolbarButton b : options.toolbar.buttons) {
@@ -70,7 +70,7 @@ public class ToolbarOptionTest {
     Options options = e2.options()
     .locale(Locale.CHINESE)
     .toolbar()
-    .button(BuildInButton.BOLD)
+    .button(Buttons.BOLD)
     .done().build();
     
     for (ToolbarButton b : options.toolbar.buttons) {
@@ -84,7 +84,7 @@ public class ToolbarOptionTest {
     Options options = e2.options()
     .fontawesomeButtonLabels()
     .toolbar()
-    .button(BuildInButton.BOLD, "0000")
+    .button(Buttons.BOLD, "0000")
     .done().build();
     
     for (ToolbarButton b : options.toolbar.buttons) {

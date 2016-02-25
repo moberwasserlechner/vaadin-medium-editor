@@ -1,6 +1,6 @@
 package com.byteowls.vaadin.mediumeditor.options;
 
-public enum BuildInButton {
+public enum Buttons {
   
   
   BOLD("bold"), ITALIC("italic"), UNDERLINE("underline"), 
@@ -11,7 +11,7 @@ public enum BuildInButton {
   
   private final String name;
   
-  private BuildInButton(String name) {
+  private Buttons(String name) {
     this.name = name;
   }
   

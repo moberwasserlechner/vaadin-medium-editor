@@ -5,6 +5,7 @@
 * #11 Translations for buildin buttons in German and English. Other languages are very welcome.by
 * #17 Fontawesome buttons labels are enabled by default
 * Added no arg constructor to MediumEditorField
+* Rename "BuildinButton" enum to "Buttons" because its shorter and its irrelevant if a button is buildin because supported extensions are added the same way. Breaking change.
 
 ### [1.0.2](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.0.1...1.0.2)
 

@@ -77,12 +77,12 @@ public class Toolbar implements Serializable {
     }
     
     public ToolbarBuilder defaultButtons() {
-      buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.UNDERLINE, BuildInButton.ANCHOR, BuildInButton.H2, BuildInButton.H3, BuildInButton.QUOTE);
+      buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.UNDERLINE, Buttons.ANCHOR, Buttons.H2, Buttons.H3, Buttons.QUOTE);
       return this;
     }
     
     public ToolbarBuilder allButtons() {
-      for (BuildInButton b : BuildInButton.values()) {
+      for (Buttons b : Buttons.values()) {
         button(b);
       }
       return this;
@@ -108,11 +108,11 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder button(BuildInButton button) {
+    public ToolbarBuilder button(Buttons button) {
       return button(button, null);
     }
     
-    public ToolbarBuilder button(BuildInButton button, String tooltip) {
+    public ToolbarBuilder button(Buttons button, String tooltip) {
       ToolbarButtonBuilder tb = getExistingTb(button);
       if (tb == null) {
         tb = ToolbarButtonBuilder.getBuildin(button);
@@ -125,12 +125,12 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder buttons(BuildInButton... buttons) {
+    public ToolbarBuilder buttons(Buttons... buttons) {
       if (buttons != null) {
         if (this.buttons == null) {
           this.buttons = new ArrayList<>();
         }
-        for (BuildInButton b : buttons) {
+        for (Buttons b : buttons) {
           button(b);
         }
       }
@@ -149,7 +149,7 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder buttonBefore(BuildInButton before, BuildInButton incoming) {
+    public ToolbarBuilder buttonBefore(Buttons before, Buttons incoming) {
       if (incoming != null) {
         if (before == null) {
           buttons(incoming);
@@ -170,7 +170,7 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder buttonAfter(BuildInButton after, BuildInButton incoming) {
+    public ToolbarBuilder buttonAfter(Buttons after, Buttons incoming) {
       if (incoming != null) {
         if (after == null) {
           buttons(incoming);
@@ -264,7 +264,7 @@ public class Toolbar implements Serializable {
       return new Toolbar(this);
     }
     
-    ToolbarButtonBuilder getExistingTb(BuildInButton button) {
+    ToolbarButtonBuilder getExistingTb(Buttons button) {
       String btnName = button.getName();
       if (buttons != null) {
         for (ToolbarButtonBuilder b : buttons) {
