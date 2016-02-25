@@ -160,10 +160,12 @@ public class Options implements Serializable {
     public String getTranslation(String code) {
       if (bundle == null) {
         Locale l = this.locale;
-        if (l == null && UI.getCurrent() != null) {
-          l = UI.getCurrent().getLocale();
-        } else {
-          l = Locale.getDefault();
+        if (l == null) {
+          if (UI.getCurrent() != null) {
+            l = UI.getCurrent().getLocale();
+          } else {
+            l = Locale.getDefault();
+          }
         }
 
         if (useDefaultLocaleFallback) {
