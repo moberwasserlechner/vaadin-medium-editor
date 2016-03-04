@@ -18,7 +18,6 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
     if (loggingEnabled) {
       console.log("medium-editor: setting value to\n" + state.content);
     }
-    e.innerHTML = state.content || "";
 
     if (!focusOutlineEnabled) {
       e.style.outline = "none";
@@ -60,6 +59,9 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
       }
       mediumEditor = new MediumEditor(e, state.options);
     }
+
+    // #18 placeholder does not disappear if not using mediumEditor's setContent()
+    mediumEditor.setContent(state.content || "");
 
     if (readOnly) {
       if (loggingEnabled) {
