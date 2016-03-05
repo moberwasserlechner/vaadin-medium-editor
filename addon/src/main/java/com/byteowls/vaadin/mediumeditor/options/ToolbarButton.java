@@ -10,6 +10,10 @@ import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.FontIcon;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class ToolbarButton implements Serializable {
 
   private static final long serialVersionUID = -8549658939678510199L;
@@ -60,7 +64,7 @@ public class ToolbarButton implements Serializable {
     return new ToolbarButtonBuilder(toolbarBuilder);
   }
 
-  public static class ToolbarButtonBuilder {
+  public static class ToolbarButtonBuilder extends AbstractBuilder<ToolbarButton> {
     private static Map<Buttons, ToolbarButtonBuilder> BUILDIN;
     static {
       BUILDIN = new HashMap<Buttons, ToolbarButtonBuilder>();
@@ -108,12 +112,12 @@ public class ToolbarButton implements Serializable {
           .name(Buttons.SUBSCRIPT.getName())
           .tagNames("sub")
           .iconFallback("<b>x<sub>1</sub></b>"));
-      BUILDIN.put(Buttons.IMAGE, ToolbarButton.builder()
-          .icon(FontAwesome.IMAGE)
-          .aria("image")
-          .name(Buttons.IMAGE.getName())
-          .tagNames("img")
-          .iconFallback("<b>image</b>"));
+//      BUILDIN.put(Buttons.IMAGE, ToolbarButton.builder()
+//          .icon(FontAwesome.IMAGE)
+//          .aria("image")
+//          .name(Buttons.IMAGE.getName())
+//          .tagNames("img")
+//          .iconFallback("<b>image</b>"));
 
       BUILDIN.put(Buttons.ORDEREDLIST, ToolbarButton.builder()
           .icon(FontAwesome.LIST_OL)
@@ -171,8 +175,9 @@ public class ToolbarButton implements Serializable {
       BUILDIN.put(Buttons.REMOVE_FORMAT, ToolbarButton.builder()
           .icon(FontAwesome.ERASER)
           .aria("removeformatting")
+          .action("removeFormat")
           .name(Buttons.REMOVE_FORMAT.getName())
-          .iconFallback("<b>&ldquo;</b>")); 
+          .iconFallback("<b>X</b>")); 
 
       BUILDIN.put(Buttons.QUOTE, ToolbarButton.builder()
           .icon(FontAwesome.QUOTE_RIGHT)
@@ -180,7 +185,7 @@ public class ToolbarButton implements Serializable {
           .aria("blockquote")
           .tagNames("blockquote")
           .name(Buttons.QUOTE.getName())
-          .iconFallback("<b>0101</b>"));  
+          .iconFallback("<b>&ldquo;</b>"));  
 
       BUILDIN.put(Buttons.PRE, ToolbarButton.builder()
           .icon(FontAwesome.CODE)
@@ -246,6 +251,13 @@ public class ToolbarButton implements Serializable {
           .tagNames("a")
           .name(Buttons.ANCHOR.getName())
           .iconFallback("<b>#</b>"));
+      
+      BUILDIN.put(Buttons.FONTSIZE, ToolbarButton.builder()
+          .icon(FontAwesome.TEXT_HEIGHT)
+          .action("fontSize")
+          .aria("fontsize")
+          .name(Buttons.FONTSIZE.getName())
+          .iconFallback("&#xB1;"));
     }
 
     /**
@@ -294,7 +306,7 @@ public class ToolbarButton implements Serializable {
     private List<String> tagNames = new ArrayList<>();
     private String action;
     private Map<String, String> style;
-    private boolean useQueryState;
+    private Boolean useQueryState;
     private List<String> classList;
     private Map<String, String> attrs;
     
@@ -388,12 +400,40 @@ public class ToolbarButton implements Serializable {
       return this;
     }
 
-    protected ToolbarButton build() {
+    @Override
+    public ToolbarButton build() {
       return new ToolbarButton(this);
     }
 
     public ToolbarBuilder done() {
       return this.toolbarBuilder;
+    }
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      if (icon != null) {
+        String contentFA = icon.getHtml();
+        if (iconText != null) {
+          contentFA += iconText;
+        }
+        putNotNull(map, "contentFA", contentFA);
+      }
+      putNotNull(map, "contentDefault", iconFallback);
+      if (customTranslation) {
+        putNotNull(map, "aria", aria);
+      } else {
+        // get buildin translations
+        putNotNull(map, "aria", toolbarBuilder.getOptionsBuilder().getTranslation(aria));
+      }
+      putNotNull(map, "name", name);
+      putNotNull(map, "action", action == null ? name : action);
+      putNotNull(map, "tagNames", tagNames);
+      putNotNull(map, "style", style);
+      putNotNull(map, "useQueryState", useQueryState);
+      putNotNull(map, "classList", classList);
+      putNotNull(map, "attrs", attrs);
+      return map;
     }
 
   }

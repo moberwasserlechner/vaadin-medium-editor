@@ -6,6 +6,10 @@ import java.util.List;
 
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class PasteHandler implements Serializable {
   
   private static final long serialVersionUID = 5903047095226719103L;
@@ -27,7 +31,7 @@ public class PasteHandler implements Serializable {
     return new PasteHandlerBuilder(optionsBuilder);
   }
   
-  public static class PasteHandlerBuilder {
+  public static class PasteHandlerBuilder extends AbstractBuilder<PasteHandler> {
     // reference to parent
     private OptionsBuilder optionsBuilder;
 
@@ -74,8 +78,18 @@ public class PasteHandler implements Serializable {
       return optionsBuilder;
     }
 
-    PasteHandler build() {
+    public PasteHandler build() {
       return new PasteHandler(this);
+    }
+    
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "forcePlainText", forcePlainText);
+      putNotNull(map, "cleanPastedHTML", cleanPastedHTML);
+      putNotNull(map, "cleanAttrs", cleanAttrs);
+      putNotNull(map, "cleanTags", cleanTags);
+      return map;
     }
     
   }

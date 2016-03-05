@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class Placeholder implements Serializable {
   
   private static final long serialVersionUID = 7188275928268373605L;
@@ -18,7 +22,7 @@ public class Placeholder implements Serializable {
     return new PlaceholderBuilder(optionsBuilder);
   }
   
-  public static class PlaceholderBuilder {
+  public static class PlaceholderBuilder extends AbstractBuilder<Placeholder> {
     // reference to parent
     private OptionsBuilder optionsBuilder;
 
@@ -37,8 +41,16 @@ public class Placeholder implements Serializable {
       return optionsBuilder;
     }
 
-    Placeholder build() {
+    @Override
+    public Placeholder build() {
       return new Placeholder(this);
+    }
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "text", text);
+      return map;
     }
     
   }

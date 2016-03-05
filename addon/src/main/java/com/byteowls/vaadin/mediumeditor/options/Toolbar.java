@@ -7,6 +7,11 @@ import java.util.List;
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 import com.byteowls.vaadin.mediumeditor.options.ToolbarButton.ToolbarButtonBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonArray;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class Toolbar implements Serializable {
   
   private static final long serialVersionUID = -3318254088223351177L;
@@ -48,7 +53,7 @@ public class Toolbar implements Serializable {
     return new ToolbarBuilder(optionsBuilder);
   }
   
-  public static class ToolbarBuilder {
+  public static class ToolbarBuilder extends AbstractBuilder<Toolbar> {
     private OptionsBuilder optionsBuilder;
     
     private Boolean allowMultiParagraphSelection;
@@ -260,8 +265,34 @@ public class Toolbar implements Serializable {
       return optionsBuilder;
     }
 
-    Toolbar build() {
+    @Override
+    public Toolbar build() {
       return new Toolbar(this);
+    }    
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "allowMultiParagraphSelection", allowMultiParagraphSelection);
+      if (buttons != null) {
+        JsonArray btnList = Json.createArray();
+        for (ToolbarButtonBuilder tbb : buttons) {
+          btnList.set(btnList.length(), tbb.buildJson());
+        }
+        map.put("buttons", btnList);
+      }
+      putNotNull(map, "diffLeft", diffLeft);
+      putNotNull(map, "diffTop", diffLeft);
+      putNotNull(map, "firstButtonClass", firstButtonClass);
+      putNotNull(map, "lastButtonClass", lastButtonClass);
+      putNotNull(map, "standardizeSelectionStart", standardizeSelectionStart);
+      putNotNull(map, "static", staticToolbar);
+      // TODO relativeContainer // Toolbar is appended relative to a given DOM-Node instead of appending it to the body and position it absolute.
+//      map.put("relativeContainer", null);
+      putNotNull(map, "align", align);
+      putNotNull(map, "sticky", sticky);
+      putNotNull(map, "updateOnEmptySelection", updateOnEmptySelection);
+      return map;
     }
     
     ToolbarButtonBuilder getExistingTb(Buttons button) {
@@ -275,7 +306,6 @@ public class Toolbar implements Serializable {
       }
       return null;
     }
-
   }
   
 }

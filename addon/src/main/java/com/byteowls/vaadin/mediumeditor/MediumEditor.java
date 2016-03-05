@@ -38,7 +38,8 @@ public class MediumEditor extends AbstractJavaScriptComponent {
    */
   public void configure(Options.OptionsBuilder builder) {
     if (builder != null) {
-      getState().options = builder.build();
+//      getState().options = builder.build();
+      getState().optionsJson = builder.buildJson();
     }
   }
 

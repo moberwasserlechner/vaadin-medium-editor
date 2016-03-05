@@ -6,6 +6,16 @@ import java.util.List;
 
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonArray;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
+/**
+ * 
+ * @author michael@byteowls.com
+ *
+ */
 public class KeyboardCommands implements Serializable {
   
   private static final long serialVersionUID = 8485268339849110774L;
@@ -20,7 +30,7 @@ public class KeyboardCommands implements Serializable {
     return new KeyboardCommandsBuilder(optionsBuilder);
   }
   
-  public static class KeyboardCommandsBuilder {
+  public static class KeyboardCommandsBuilder extends AbstractBuilder<KeyboardCommands> {
     // reference to parent
     private OptionsBuilder optionsBuilder;
 
@@ -50,10 +60,25 @@ public class KeyboardCommands implements Serializable {
       return optionsBuilder;
     }
 
-    KeyboardCommands build() {
+    @Override
+    public KeyboardCommands build() {
       return new KeyboardCommands(this);
     }
-    
+
+    @Override
+    public JsonValue buildJson() {
+      JsonArray array = Json.createArray();
+      for (KeyboardCommand c : commands) {
+        JsonObject map = Json.createObject();
+        putNotNull(map, "command", c.command);
+        putNotNull(map, "key", c.key);
+        putNotNull(map, "meta", c.meta);
+        putNotNull(map, "shift", c.shift);
+        putNotNull(map, "alt", c.alt);
+        array.set(array.length(), map);
+      }
+      return array;
+    }
   }
 
 }

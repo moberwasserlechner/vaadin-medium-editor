@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
 
+import elemental.json.JsonArray;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class ToolbarOptionTest {
   
   @Test
@@ -16,7 +20,6 @@ public class ToolbarOptionTest {
     String exception = null;
     try {
       e2.options()
-      .fontawesomeButtonLabels()
       .toolbar()
         .allButtons()
         .done();
@@ -46,6 +49,27 @@ public class ToolbarOptionTest {
     
     for (ToolbarButton b : options.toolbar.buttons) {
       Assert.assertEquals("Fett", b.aria);
+    }
+  }
+  
+  @Test
+  public void testNonExistingPlatformFallbackTranslationJson() {
+    MediumEditor e2 = new MediumEditor();
+    JsonValue options = e2.options()
+    .locale(Locale.CHINESE)
+    .useDefaultLocaleFallback(true) // Locale.getLocale()
+    .fontawesomeButtonLabels()
+    .toolbar()
+    .button(Buttons.BOLD)
+    .done().buildJson();
+    
+    JsonObject obj = (JsonObject) options;
+    
+    JsonObject toolbar = obj.getObject("toolbar");
+    JsonArray buttons = toolbar.getArray("buttons");
+    for (int i = 0; i < buttons.length(); i++) {
+      JsonObject b = buttons.getObject(i);
+      Assert.assertEquals("Fett", b.getString("aria"));
     }
   }
   

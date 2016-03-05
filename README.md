@@ -46,7 +46,7 @@ Dependency
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
       </dependency>
     </dependencies>
 
@@ -68,7 +68,7 @@ Repository
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.0.2")
+      compile ("com.byteowls:vaadin-medium-editor:1.1.0")
     }
 
 ## Prerequisite

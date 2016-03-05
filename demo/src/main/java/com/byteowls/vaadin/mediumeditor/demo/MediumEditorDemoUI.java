@@ -54,11 +54,12 @@ public class MediumEditorDemoUI extends UI {
     });
     e1.configure(
         e1.options()
-        .fontawesomeButtonLabels()
+//        .fontawesomeButtonLabels()
+//        .toolbarDisabled()
         .toolbar()
-          .buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.H1, Buttons.JUSTIFY_CENTER)
+          .buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.JUSTIFY_CENTER, Buttons.ANCHOR)
           // numberic button translations ;)
-          .buttonTranslations("1", "2", "3", "4")
+//          .buttonTranslations("1", "2", "3", "4")
           .done()
         .autoLink(true)
         .imageDragging(false)
@@ -70,6 +71,7 @@ public class MediumEditorDemoUI extends UI {
     p1.setSizeFull();
     
     MediumEditor e2 = new MediumEditor();
+    e2.setJsLoggingEnabled(true);
     e2.setSizeFull();
     e2.setContent(Lorem.getHtmlParagraphs(2, 5));
     e2.addBlurListener(value -> {
@@ -78,7 +80,7 @@ public class MediumEditorDemoUI extends UI {
     e2.configure(
         e2.options()
         .locale(Locale.GERMAN)
-        .fontawesomeButtonLabels()
+//        .defaultButtonLabels()
         .toolbar()
           .allButtons()
           .done()

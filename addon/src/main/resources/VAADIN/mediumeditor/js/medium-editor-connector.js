@@ -55,9 +55,9 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
       });
 
       if (loggingEnabled) {
-        console.log("medium-editor: options are\n", JSON.stringify(state.options, null, 2));
+        console.log("medium-editor: options are\n", JSON.stringify(state.optionsJson, null, 2));
       }
-      mediumEditor = new MediumEditor(e, state.options);
+      mediumEditor = new MediumEditor(e, state.optionsJson);
     }
 
     // #18 placeholder does not disappear if not using mediumEditor's setContent()

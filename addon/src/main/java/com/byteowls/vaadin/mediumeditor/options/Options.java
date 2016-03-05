@@ -13,13 +13,16 @@ import com.byteowls.vaadin.mediumeditor.options.Placeholder.PlaceholderBuilder;
 import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
 import com.vaadin.ui.UI;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 
 public class Options implements Serializable {
 
   private static final long serialVersionUID = 3972297834616344210L;
 
   public String activeButtonClass;
-  // TODO fontawesome doesnot work although vaadin includes fontawesome but maybe its repackaged and therefore not found
   public Object buttonLabels;
   public Integer delay = null;
   public Boolean disableReturn;
@@ -28,8 +31,6 @@ public class Options implements Serializable {
   public Boolean disableEditing;
   // TODO selector which is resolved in javascript
   public String elementsContainerSelector;
-  // TODO 
-  //  public Object extensions;
   public Boolean spellcheck;
   public Boolean targetBlank;
   public Boolean autoLink;
@@ -44,7 +45,13 @@ public class Options implements Serializable {
 
   private Options(OptionsBuilder builder) {
     activeButtonClass = builder.activeButtonClass;
-    buttonLabels = builder.buttonLabels;
+    if (builder.fontAwesomeLabels != null) {
+      if (builder.fontAwesomeLabels) {
+        buttonLabels = OptionsBuilder.BUTTON_LABEL_FONTAWESOME;
+      } else {
+        buttonLabels = Boolean.FALSE;
+      }
+    }
     delay = builder.delay;
     disableReturn = builder.disableReturn;
     disableDoubleReturn = builder.disableDoubleReturn;
@@ -107,12 +114,13 @@ public class Options implements Serializable {
     return new Options.OptionsBuilder();
   }
 
-  public static class OptionsBuilder {
+  public static class OptionsBuilder extends AbstractBuilder<Options> {
 
     private static final String BUTTON_LABEL_FONTAWESOME = "fontawesome";
     private static final String RESOURCE_BUNDLE_BASENAME = "com/byteowls/vaadin/mediumeditor/options/i18n";
     private String activeButtonClass;
-    private Object buttonLabels = BUTTON_LABEL_FONTAWESOME;
+    private Boolean fontAwesomeLabels = true;
+//    private Object buttonLabels = BUTTON_LABEL_FONTAWESOME;
     private Integer delay = null;
     private Boolean disableReturn;
     private Boolean disableDoubleReturn;
@@ -136,7 +144,7 @@ public class Options implements Serializable {
     private PasteHandlerBuilder pasteHandler;
     private boolean keyboardCommandsEnabled = true;
     private KeyboardCommandsBuilder keyboardCommands;
-
+    
     private boolean useDefaultLocaleFallback = false;
     private Locale locale;
     private ResourceBundle bundle;
@@ -183,12 +191,12 @@ public class Options implements Serializable {
     }
 
     public OptionsBuilder fontawesomeButtonLabels() {
-      this.buttonLabels = BUTTON_LABEL_FONTAWESOME;
+      this.fontAwesomeLabels = true;
       return this;
     }
 
     public OptionsBuilder defaultButtonLabels() {
-      this.buttonLabels = Boolean.FALSE;
+      this.fontAwesomeLabels = false;
       return this;
     }
 
@@ -249,7 +257,7 @@ public class Options implements Serializable {
       }
       return toolbar;
     }
-
+    
     public OptionsBuilder anchorPreviewDisabled() {
       this.anchorPreviewEnabled = false;
       return this;
@@ -312,8 +320,78 @@ public class Options implements Serializable {
       return this;
     }
 
+    @Override
     public Options build() {
       return new Options(this);
+    }
+    
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "activeButtonClass", activeButtonClass);
+      if (fontAwesomeLabels != null) {
+        if (fontAwesomeLabels) {
+          putNotNull(map, "buttonLabels", BUTTON_LABEL_FONTAWESOME);
+        } else {
+          putNotNull(map, "buttonLabels", false);
+        }
+      }
+      putNotNull(map, "delay", delay);
+      putNotNull(map, "disableReturn", disableReturn);
+      putNotNull(map, "disableDoubleReturn", disableDoubleReturn);
+      putNotNull(map, "disableExtraSpaces", disableExtraSpaces);
+      putNotNull(map, "disableEditing", disableEditing);
+      putNotNull(map, "spellcheck", spellcheck);
+      putNotNull(map, "targetBlank", targetBlank);
+      putNotNull(map, "autoLink", autoLink);
+      putNotNull(map, "imageDragging", imageDragging);
+
+      // toolbar
+      if (toolbarEnabled) {
+        if (toolbar != null) {
+          putNotNull(map, "toolbar", toolbar.buildJson());
+        }
+      } else {
+        putNotNull(map, "toolbar", Boolean.FALSE);
+      }
+
+      // anchor preview
+      if (anchorPreviewEnabled) {
+        if (anchorPreview != null) {
+          putNotNull(map, "anchorPreview", anchorPreview.buildJson());
+        }
+      } else {
+        putNotNull(map, "anchorPreview", Boolean.FALSE);
+      }
+
+      // placeholder
+      if (placeholderEnabled) {
+        if (placeholder != null) {
+          putNotNull(map, "placeholder", placeholder.buildJson());
+        }
+      } else {
+        putNotNull(map, "placeholder", Boolean.FALSE);
+      }
+
+      // anchor
+      if (anchor != null) {
+        putNotNull(map, "anchor", anchor.buildJson());
+      }
+
+      // paste
+      if (pasteHandler != null) {
+        putNotNull(map, "paste", pasteHandler.buildJson());
+      }
+
+      // keyboard commands
+      if (keyboardCommandsEnabled) {
+        if (keyboardCommands != null) {
+          putNotNull(map, "keyboardCommands", keyboardCommands.buildJson());
+        }
+      } else {
+        putNotNull(map, "keyboardCommands", Boolean.FALSE);
+      }
+      return map;
     }
   }
 
