@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
 import com.byteowls.vaadin.mediumeditor.options.Buttons;
+import com.byteowls.vaadin.mediumeditor.options.MediumEditorTheme;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -73,6 +74,7 @@ public class MediumEditorDemoUI extends UI {
     MediumEditor e2 = new MediumEditor();
     e2.setJsLoggingEnabled(true);
     e2.setSizeFull();
+    e2.setTheme(MediumEditorTheme.BOOTSTRAP);
     e2.setContent(Lorem.getHtmlParagraphs(2, 5));
     e2.addBlurListener(value -> {
       preview.setValue(value);
@@ -80,7 +82,6 @@ public class MediumEditorDemoUI extends UI {
     e2.configure(
         e2.options()
         .locale(Locale.GERMAN)
-//        .defaultButtonLabels()
         .toolbar()
           .allButtons()
           .done()

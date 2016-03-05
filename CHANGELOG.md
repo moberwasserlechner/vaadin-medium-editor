@@ -11,6 +11,7 @@
 * #14 Remove Buttons.IMAGE because imHO its not usable
 * Change option state from Bean to JsonValue, because options with multiple datatypes and parameter named like java reserved words (like static) are supported now.
 * Add FontSize change button
+* #1 Support medium editor themes
 
 ### [1.0.2](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.0.1...1.0.2)
 

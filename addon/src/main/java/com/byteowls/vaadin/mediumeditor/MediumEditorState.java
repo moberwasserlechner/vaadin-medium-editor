@@ -1,6 +1,7 @@
 package com.byteowls.vaadin.mediumeditor;
 
 import com.byteowls.vaadin.mediumeditor.options.Options;
+import com.byteowls.vaadin.mediumeditor.options.MediumEditorTheme;
 import com.vaadin.shared.ui.JavaScriptComponentState;
 
 import elemental.json.JsonValue;
@@ -14,5 +15,6 @@ public class MediumEditorState extends JavaScriptComponentState {
   public boolean focusOutlineEnabled = true;
   public Options options;
   public JsonValue optionsJson;
+  public MediumEditorTheme theme = MediumEditorTheme.DEFAULT;
 
 }
