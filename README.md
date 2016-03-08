@@ -46,7 +46,7 @@ Dependency
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
       </dependency>
     </dependencies>
 
@@ -68,7 +68,7 @@ Repository
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.0.2")
+      compile ("com.byteowls:vaadin-medium-editor:1.1.0")
     }
 
 ## Prerequisite
@@ -175,6 +175,21 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 6. Push to the branch (`git push origin my-feature-or-bug`)
 7. Create new Pull Request
 
+### Translations
+
+Additional languages are very welcome. Thanks in advance :).
+
+ResourceBundles with properties files for the actual translations are used. They are located at
+
+    https://github.com/moberwasserlechner/vaadin-medium-editor/tree/develop/addon/src/main/resources/com/byteowls/vaadin/mediumeditor/options
+ 
+
+Supported languages are:
+
+* English (fallback)
+* German
+ 
+
 ### Eclipse
 
 1. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
@@ -194,6 +209,7 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 ### Vaadin Medium Editor
 
 **Run it yourself**
+
 1. Clone the repository
 2. Run the embedded Tomcat by `./gradlew :demo:run`
 3. It starts at `http://localhost:8080`

@@ -1,5 +1,5 @@
 plugins {
-  id "fi.jasoft.plugin.vaadin" version "0.10.4"
+  id "fi.jasoft.plugin.vaadin" version "0.10.7"
   id "org.akhikhl.gretty" version "1.2.4"
 }
 

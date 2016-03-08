@@ -1,7 +1,10 @@
 package com.byteowls.vaadin.mediumeditor.demo;
 
+import java.util.Locale;
+
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
-import com.byteowls.vaadin.mediumeditor.options.BuildInButton;
+import com.byteowls.vaadin.mediumeditor.options.Buttons;
+import com.byteowls.vaadin.mediumeditor.options.MediumEditorTheme;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -52,11 +55,12 @@ public class MediumEditorDemoUI extends UI {
     });
     e1.configure(
         e1.options()
-        .fontawesomeButtonLabels()
+//        .fontawesomeButtonLabels()
+//        .toolbarDisabled()
         .toolbar()
-          .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
-          // german button translations
-          .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
+          .buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.JUSTIFY_CENTER, Buttons.ANCHOR)
+          // numberic button translations ;)
+//          .buttonTranslations("1", "2", "3", "4")
           .done()
         .autoLink(true)
         .imageDragging(false)
@@ -68,14 +72,16 @@ public class MediumEditorDemoUI extends UI {
     p1.setSizeFull();
     
     MediumEditor e2 = new MediumEditor();
+    e2.setJsLoggingEnabled(true);
     e2.setSizeFull();
+    e2.setTheme(MediumEditorTheme.BOOTSTRAP);
     e2.setContent(Lorem.getHtmlParagraphs(2, 5));
     e2.addBlurListener(value -> {
       preview.setValue(value);
     });
     e2.configure(
         e2.options()
-        .fontawesomeButtonLabels()
+        .locale(Locale.GERMAN)
         .toolbar()
           .allButtons()
           .done()

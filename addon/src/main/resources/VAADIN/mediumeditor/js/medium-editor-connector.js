@@ -1,6 +1,8 @@
 window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
   // see the javadoc of com.vaadin.ui.AbstractJavaScriptComponent for all functions on this.
+  var THEME_ID = "medium-editor-theme-id";
   var mediumEditor;
+  var mediumThemeLink;
   var e = this.getElement();
   // Please note that in JavaScript, this is not necessarily defined inside callback functions and it might therefore be necessary to assign the reference to a separate variable
   var self = this;
@@ -15,10 +17,24 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
     focusOutlineEnabled = state.focusOutlineEnabled;
     readOnly = state.readOnly;
 
+    // #1 theme
+    if (typeof mediumThemeLink === 'undefined') {
+      // check if a theme css is already loaded
+      mediumThemeLink = document.getElementById(THEME_ID);
+      if (mediumThemeLink == null) {
+        mediumThemeLink = document.createElement("link");
+        mediumThemeLink.setAttribute("rel", "stylesheet");
+        mediumThemeLink.setAttribute("type", "text/css");
+        mediumThemeLink.setAttribute("id", THEME_ID);
+        document.getElementsByTagName("head")[0].appendChild(mediumThemeLink);
+      }
+    }
+    var url = this.translateVaadinUri("vaadin://mediumeditor/css/"+state.theme.toLowerCase()+".min.css");
+    mediumThemeLink.setAttribute("href", url);
+
     if (loggingEnabled) {
       console.log("medium-editor: setting value to\n" + state.content);
     }
-    e.innerHTML = state.content || "";
 
     if (!focusOutlineEnabled) {
       e.style.outline = "none";
@@ -56,10 +72,13 @@ window.com_byteowls_vaadin_mediumeditor_MediumEditor = function() {
       });
 
       if (loggingEnabled) {
-        console.log("medium-editor: options are\n", JSON.stringify(state.options, null, 2));
+        console.log("medium-editor: options are\n", JSON.stringify(state.optionsJson, null, 2));
       }
-      mediumEditor = new MediumEditor(e, state.options);
+      mediumEditor = new MediumEditor(e, state.optionsJson);
     }
+
+    // #18 placeholder does not disappear if not using mediumEditor's setContent()
+    mediumEditor.setContent(state.content || "");
 
     if (readOnly) {
       if (loggingEnabled) {

@@ -7,6 +7,11 @@ import java.util.List;
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 import com.byteowls.vaadin.mediumeditor.options.ToolbarButton.ToolbarButtonBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonArray;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class Toolbar implements Serializable {
   
   private static final long serialVersionUID = -3318254088223351177L;
@@ -41,13 +46,14 @@ public class Toolbar implements Serializable {
     align = builder.align;
     sticky = builder.sticky;
     updateOnEmptySelection = builder.updateOnEmptySelection;
+    
   }
   
   public static ToolbarBuilder builder(OptionsBuilder optionsBuilder) {
     return new ToolbarBuilder(optionsBuilder);
   }
   
-  public static class ToolbarBuilder {
+  public static class ToolbarBuilder extends AbstractBuilder<Toolbar> {
     private OptionsBuilder optionsBuilder;
     
     private Boolean allowMultiParagraphSelection;
@@ -62,9 +68,12 @@ public class Toolbar implements Serializable {
     private Boolean sticky;
     private Boolean updateOnEmptySelection;
     
-    
     public ToolbarBuilder(OptionsBuilder optionsBuilder) {
       this.optionsBuilder = optionsBuilder;
+    }
+    
+    OptionsBuilder getOptionsBuilder() {
+      return this.optionsBuilder;
     }
     
     public ToolbarBuilder allowMultiParagraphSelection(boolean allowMultiParagraphSelection) {
@@ -73,12 +82,12 @@ public class Toolbar implements Serializable {
     }
     
     public ToolbarBuilder defaultButtons() {
-      buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.UNDERLINE, BuildInButton.ANCHOR, BuildInButton.H2, BuildInButton.H3, BuildInButton.QUOTE);
+      buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.UNDERLINE, Buttons.ANCHOR, Buttons.H2, Buttons.H3, Buttons.QUOTE);
       return this;
     }
     
     public ToolbarBuilder allButtons() {
-      for (BuildInButton b : BuildInButton.values()) {
+      for (Buttons b : Buttons.values()) {
         button(b);
       }
       return this;
@@ -96,7 +105,7 @@ public class Toolbar implements Serializable {
         
         for (ToolbarButtonBuilder b : buttons) {
           if (cnt < len) {
-            b.aria(translations[cnt]);
+            b.aria(translations[cnt], true);
           }
           cnt++;
         }
@@ -104,32 +113,30 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder button(BuildInButton button) {
+    public ToolbarBuilder button(Buttons button) {
       return button(button, null);
     }
     
-    public ToolbarBuilder button(BuildInButton button, String tooltip) {
-      ToolbarButtonBuilder tb = getExistingTb(button); 
+    public ToolbarBuilder button(Buttons button, String tooltip) {
+      ToolbarButtonBuilder tb = getExistingTb(button);
       if (tb == null) {
-        tb = ToolbarButtonBuilder.BUILDIN.get(button);
+        tb = ToolbarButtonBuilder.getBuildin(button);
+        tb.parentBuilder(this);
         buttons.add(tb);
       }
       if (tooltip != null) {
-        tb.aria(tooltip);
+        tb.aria(tooltip, true);
       }
       return this;
     }
     
-    public ToolbarBuilder buttons(BuildInButton... buttons) {
+    public ToolbarBuilder buttons(Buttons... buttons) {
       if (buttons != null) {
         if (this.buttons == null) {
           this.buttons = new ArrayList<>();
         }
-        for (BuildInButton b : buttons) {
-          ToolbarButtonBuilder tbb = ToolbarButtonBuilder.BUILDIN.get(b);
-          if (tbb != null) {
-            this.buttons.add(tbb);
-          }
+        for (Buttons b : buttons) {
+          button(b);
         }
       }
       return this;
@@ -147,13 +154,15 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder buttonBefore(BuildInButton before, BuildInButton incoming) {
+    public ToolbarBuilder buttonBefore(Buttons before, Buttons incoming) {
       if (incoming != null) {
         if (before == null) {
           buttons(incoming);
         } else {
-          ToolbarButtonBuilder beforeTb = ToolbarButtonBuilder.BUILDIN.get(before);
-          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.BUILDIN.get(incoming);
+          ToolbarButtonBuilder beforeTb = ToolbarButtonBuilder.getBuildin(before);
+          beforeTb.parentBuilder(this);
+          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.getBuildin(incoming);
+          incomingTb.parentBuilder(this);
           
           int beforeIdx = buttons.indexOf(beforeTb);
           int insertIdx = --beforeIdx;
@@ -166,13 +175,15 @@ public class Toolbar implements Serializable {
       return this;
     }
     
-    public ToolbarBuilder buttonAfter(BuildInButton after, BuildInButton incoming) {
+    public ToolbarBuilder buttonAfter(Buttons after, Buttons incoming) {
       if (incoming != null) {
         if (after == null) {
           buttons(incoming);
         } else {
-          ToolbarButtonBuilder afterTb = ToolbarButtonBuilder.BUILDIN.get(after);
-          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.BUILDIN.get(incoming);
+          ToolbarButtonBuilder afterTb = ToolbarButtonBuilder.getBuildin(after);
+          afterTb.parentBuilder(this);
+          ToolbarButtonBuilder incomingTb = ToolbarButtonBuilder.getBuildin(incoming);
+          incomingTb.parentBuilder(this);
           
           int afterIdx = buttons.indexOf(afterTb);
           int insertIdx = afterIdx++;
@@ -254,11 +265,37 @@ public class Toolbar implements Serializable {
       return optionsBuilder;
     }
 
-    Toolbar build() {
+    @Override
+    public Toolbar build() {
       return new Toolbar(this);
+    }    
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "allowMultiParagraphSelection", allowMultiParagraphSelection);
+      if (buttons != null) {
+        JsonArray btnList = Json.createArray();
+        for (ToolbarButtonBuilder tbb : buttons) {
+          btnList.set(btnList.length(), tbb.buildJson());
+        }
+        map.put("buttons", btnList);
+      }
+      putNotNull(map, "diffLeft", diffLeft);
+      putNotNull(map, "diffTop", diffLeft);
+      putNotNull(map, "firstButtonClass", firstButtonClass);
+      putNotNull(map, "lastButtonClass", lastButtonClass);
+      putNotNull(map, "standardizeSelectionStart", standardizeSelectionStart);
+      putNotNull(map, "static", staticToolbar);
+      // TODO relativeContainer // Toolbar is appended relative to a given DOM-Node instead of appending it to the body and position it absolute.
+//      map.put("relativeContainer", null);
+      putNotNull(map, "align", align);
+      putNotNull(map, "sticky", sticky);
+      putNotNull(map, "updateOnEmptySelection", updateOnEmptySelection);
+      return map;
     }
     
-    ToolbarButtonBuilder getExistingTb(BuildInButton button) {
+    ToolbarButtonBuilder getExistingTb(Buttons button) {
       String btnName = button.getName();
       if (buttons != null) {
         for (ToolbarButtonBuilder b : buttons) {
@@ -269,7 +306,6 @@ public class Toolbar implements Serializable {
       }
       return null;
     }
-
   }
   
 }

@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class AnchorPreview implements Serializable {
   
   private static final long serialVersionUID = -564862914858140461L;
@@ -22,7 +26,7 @@ public class AnchorPreview implements Serializable {
     return new AnchorPreviewBuilder(optionsBuilder);
   }
   
-  public static class AnchorPreviewBuilder {
+  public static class AnchorPreviewBuilder extends AbstractBuilder<AnchorPreview> {
     // reference to parent
     private OptionsBuilder optionsBuilder;
 
@@ -53,8 +57,18 @@ public class AnchorPreview implements Serializable {
       return optionsBuilder;
     }
 
-    AnchorPreview build() {
+    @Override
+    public AnchorPreview build() {
       return new AnchorPreview(this);
+    }
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "hideDelay", hideDelay);
+      putNotNull(map, "previewValueSelector", previewValueSelector);
+      putNotNull(map, "showWhenToolbarIsVisible", showWhenToolbarIsVisible);
+      return map;
     }
     
   }

@@ -10,6 +10,10 @@ import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.FontIcon;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class ToolbarButton implements Serializable {
 
   private static final long serialVersionUID = -8549658939678510199L;
@@ -34,7 +38,12 @@ public class ToolbarButton implements Serializable {
       }
     }
     contentDefault = builder.iconFallback;
-    aria = builder.aria;
+    if (builder.customTranslation) {
+      aria = builder.aria;
+    } else {
+      // get buildin translations
+      aria = builder.toolbarBuilder.getOptionsBuilder().getTranslation(builder.aria);
+    }
     name = builder.name;
     action = builder.action;
     if (action == null) {
@@ -55,196 +64,235 @@ public class ToolbarButton implements Serializable {
     return new ToolbarButtonBuilder(toolbarBuilder);
   }
 
-  public static class ToolbarButtonBuilder {
-    public static Map<BuildInButton, ToolbarButtonBuilder> BUILDIN;
+  public static class ToolbarButtonBuilder extends AbstractBuilder<ToolbarButton> {
+    private static Map<Buttons, ToolbarButtonBuilder> BUILDIN;
     static {
-      BUILDIN = new HashMap<BuildInButton, ToolbarButtonBuilder>();
-      BUILDIN.put(BuildInButton.BOLD, ToolbarButton.builder()
+      BUILDIN = new HashMap<Buttons, ToolbarButtonBuilder>();
+      BUILDIN.put(Buttons.BOLD, ToolbarButton.builder()
           .icon(FontAwesome.BOLD)
           .aria("bold")
-          .name(BuildInButton.BOLD.getName())
+          .name(Buttons.BOLD.getName())
           .tagNames("b", "strong")
           .style("font-weight", "700|bold")
           .useQueryState(true)
           .iconFallback("<b>B</b>"));
-      BUILDIN.put(BuildInButton.ITALIC, ToolbarButton.builder()
+      BUILDIN.put(Buttons.ITALIC, ToolbarButton.builder()
           .icon(FontAwesome.ITALIC)
           .aria("italic")
-          .name(BuildInButton.ITALIC.getName())
+          .name(Buttons.ITALIC.getName())
           .tagNames("i", "em")
           .style("font-style", "italic")
           .useQueryState(true)
           .iconFallback("<b><i>I</i></b>"));
-      BUILDIN.put(BuildInButton.UNDERLINE, ToolbarButton.builder()
+      BUILDIN.put(Buttons.UNDERLINE, ToolbarButton.builder()
           .icon(FontAwesome.UNDERLINE)
           .aria("underline")
-          .name(BuildInButton.UNDERLINE.getName())
+          .name(Buttons.UNDERLINE.getName())
           .tagNames("u")
           .style("text-decoration", "underline")
           .useQueryState(true)
           .iconFallback("<b><u>U</u></b>"));
-      BUILDIN.put(BuildInButton.STRIKETHROUGH, ToolbarButton.builder()
+      BUILDIN.put(Buttons.STRIKETHROUGH, ToolbarButton.builder()
           .icon(FontAwesome.STRIKETHROUGH)
-          .aria("strike through")
-          .name(BuildInButton.STRIKETHROUGH.getName())
+          .aria("strikethrough")
+          .name(Buttons.STRIKETHROUGH.getName())
           .tagNames("strike")
           .style("text-decoration", "line-through")
           .useQueryState(true)
           .iconFallback("<s>A</s>"));
-      BUILDIN.put(BuildInButton.SUPERSCRIPT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.SUPERSCRIPT, ToolbarButton.builder()
           .icon(FontAwesome.SUPERSCRIPT)
           .aria("superscript")
-          .name(BuildInButton.SUPERSCRIPT.getName())
+          .name(Buttons.SUPERSCRIPT.getName())
           .tagNames("sup")
           .iconFallback("<b>x<sup>1</sup></b>"));
-      BUILDIN.put(BuildInButton.SUBSCRIPT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.SUBSCRIPT, ToolbarButton.builder()
           .icon(FontAwesome.SUBSCRIPT)
           .aria("subscript")
-          .name(BuildInButton.SUBSCRIPT.getName())
+          .name(Buttons.SUBSCRIPT.getName())
           .tagNames("sub")
           .iconFallback("<b>x<sub>1</sub></b>"));
-      BUILDIN.put(BuildInButton.IMAGE, ToolbarButton.builder()
-          .icon(FontAwesome.IMAGE)
-          .aria("image")
-          .name(BuildInButton.IMAGE.getName())
-          .tagNames("img")
-          .iconFallback("<b>image</b>"));
+//      BUILDIN.put(Buttons.IMAGE, ToolbarButton.builder()
+//          .icon(FontAwesome.IMAGE)
+//          .aria("image")
+//          .name(Buttons.IMAGE.getName())
+//          .tagNames("img")
+//          .iconFallback("<b>image</b>"));
 
-      BUILDIN.put(BuildInButton.ORDEREDLIST, ToolbarButton.builder()
+      BUILDIN.put(Buttons.ORDEREDLIST, ToolbarButton.builder()
           .icon(FontAwesome.LIST_OL)
-          .aria("ordered list")
+          .aria("orderedlist")
           .action("insertorderedlist")
-          .name(BuildInButton.ORDEREDLIST.getName())
+          .name(Buttons.ORDEREDLIST.getName())
           .tagNames("ol")
           .useQueryState(true)
           .iconFallback("<b>1.</b>"));
-      BUILDIN.put(BuildInButton.UNORDEREDLIST, ToolbarButton.builder()
+      BUILDIN.put(Buttons.UNORDEREDLIST, ToolbarButton.builder()
           .icon(FontAwesome.LIST_UL)
-          .aria("unordered list")
+          .aria("unorderedlist")
           .action("insertunorderedlist")
-          .name(BuildInButton.UNORDEREDLIST.getName())
+          .name(Buttons.UNORDEREDLIST.getName())
           .tagNames("ol")
           .useQueryState(true)
           .iconFallback("<b>&bull;</b>"));
 
-      BUILDIN.put(BuildInButton.INDENT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.INDENT, ToolbarButton.builder()
           .icon(FontAwesome.INDENT)
           .aria("indent")
-          .name(BuildInButton.INDENT.getName())
+          .name(Buttons.INDENT.getName())
           .iconFallback("<b>&rarr;</b>"));
-      BUILDIN.put(BuildInButton.OUTDENT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.OUTDENT, ToolbarButton.builder()
           .icon(FontAwesome.OUTDENT)
           .aria("outdent")
-          .name(BuildInButton.OUTDENT.getName())
+          .name(Buttons.OUTDENT.getName())
           .iconFallback("<b>&larr;</b>"));
 
-      BUILDIN.put(BuildInButton.JUSTIFY_FULL, ToolbarButton.builder()
+      BUILDIN.put(Buttons.JUSTIFY_FULL, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_JUSTIFY)
-          .aria("align justify")
+          .aria("alignjustify")
           .style("text-align", "justify")
-          .name(BuildInButton.JUSTIFY_FULL.getName())
+          .name(Buttons.JUSTIFY_FULL.getName())
           .iconFallback("<b>J</b>"));
-      BUILDIN.put(BuildInButton.JUSTIFY_LEFT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.JUSTIFY_LEFT, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_LEFT)
-          .aria("align left")
+          .aria("alignleft")
           .style("text-align", "left")
-          .name(BuildInButton.JUSTIFY_LEFT.getName())
+          .name(Buttons.JUSTIFY_LEFT.getName())
           .iconFallback("<b>L</b>"));
-      BUILDIN.put(BuildInButton.JUSTIFY_CENTER, ToolbarButton.builder()
+      BUILDIN.put(Buttons.JUSTIFY_CENTER, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_CENTER)
-          .aria("align center")
+          .aria("aligncenter")
           .style("text-align", "center")
-          .name(BuildInButton.JUSTIFY_CENTER.getName())
+          .name(Buttons.JUSTIFY_CENTER.getName())
           .iconFallback("<b>C</b>"));
-      BUILDIN.put(BuildInButton.JUSTIFY_RIGHT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.JUSTIFY_RIGHT, ToolbarButton.builder()
           .icon(FontAwesome.ALIGN_RIGHT)
-          .aria("align right")
+          .aria("alignright")
           .style("text-align", "right")
-          .name(BuildInButton.JUSTIFY_RIGHT.getName())
+          .name(Buttons.JUSTIFY_RIGHT.getName())
           .iconFallback("<b>R</b>"));
 
-      BUILDIN.put(BuildInButton.REMOVE_FORMAT, ToolbarButton.builder()
+      BUILDIN.put(Buttons.REMOVE_FORMAT, ToolbarButton.builder()
           .icon(FontAwesome.ERASER)
-          .aria("remove formatting")
-          .name(BuildInButton.REMOVE_FORMAT.getName())
-          .iconFallback("<b>&ldquo;</b>")); 
+          .aria("removeformatting")
+          .action("removeFormat")
+          .name(Buttons.REMOVE_FORMAT.getName())
+          .iconFallback("<b>X</b>")); 
 
-      BUILDIN.put(BuildInButton.QUOTE, ToolbarButton.builder()
+      BUILDIN.put(Buttons.QUOTE, ToolbarButton.builder()
           .icon(FontAwesome.QUOTE_RIGHT)
           .action("append-blockquote")
           .aria("blockquote")
           .tagNames("blockquote")
-          .name(BuildInButton.QUOTE.getName())
-          .iconFallback("<b>0101</b>"));  
+          .name(Buttons.QUOTE.getName())
+          .iconFallback("<b>&ldquo;</b>"));  
 
-      BUILDIN.put(BuildInButton.PRE, ToolbarButton.builder()
+      BUILDIN.put(Buttons.PRE, ToolbarButton.builder()
           .icon(FontAwesome.CODE)
           .action("append-pre")
-          .aria("preformatted text")
+          .aria("preformattedtext")
           .tagNames("pre")
-          .name(BuildInButton.PRE.getName())
+          .name(Buttons.PRE.getName())
           .iconFallback("<b>0101</b>"));
 
-      BUILDIN.put(BuildInButton.H1, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H1, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>1</sup>")
           .action("append-h1")
-          .aria("header type one")
+          .aria("headertype1")
           .tagNames("h1")
-          .name(BuildInButton.H1.getName())
+          .name(Buttons.H1.getName())
           .iconFallback("<b>H1</b>"));
 
-      BUILDIN.put(BuildInButton.H2, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H2, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>2</sup>")
           .action("append-h2")
-          .aria("header type two")
+          .aria("headertype2")
           .tagNames("h2")
-          .name(BuildInButton.H2.getName())
+          .name(Buttons.H2.getName())
           .iconFallback("<b>H2</b>"));
 
-      BUILDIN.put(BuildInButton.H3, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H3, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>3</sup>")
           .action("append-h3")
-          .aria("header type three")
+          .aria("headertype3")
           .tagNames("h3")
-          .name(BuildInButton.H3.getName())
+          .name(Buttons.H3.getName())
           .iconFallback("<b>H3</b>"));
 
-      BUILDIN.put(BuildInButton.H4, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H4, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>4</sup>")
           .action("append-h4")
-          .aria("header type four")
+          .aria("headertype4")
           .tagNames("h4")
-          .name(BuildInButton.H4.getName())
+          .name(Buttons.H4.getName())
           .iconFallback("<b>H4</b>"));
 
-      BUILDIN.put(BuildInButton.H5, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H5, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>5</sup>")
           .action("append-h5")
-          .aria("header type five")
+          .aria("headertype5")
           .tagNames("h5")
-          .name(BuildInButton.H5.getName())
+          .name(Buttons.H5.getName())
           .iconFallback("<b>H5</b>"));
 
-      BUILDIN.put(BuildInButton.H6, ToolbarButton.builder()
+      BUILDIN.put(Buttons.H6, ToolbarButton.builder()
           .icon(FontAwesome.HEADER, "<sup>6</sup>")
           .action("append-h6")
-          .aria("header type six")
+          .aria("headertype6")
           .tagNames("h6")
-          .name(BuildInButton.H6.getName())
+          .name(Buttons.H6.getName())
           .iconFallback("<b>H6</b>"));
       
       // extension
-      BUILDIN.put(BuildInButton.ANCHOR, ToolbarButton.builder()
+      BUILDIN.put(Buttons.ANCHOR, ToolbarButton.builder()
           .icon(FontAwesome.LINK)
           .action("createLink")
           .aria("link")
           .tagNames("a")
-          .name(BuildInButton.ANCHOR.getName())
+          .name(Buttons.ANCHOR.getName())
           .iconFallback("<b>#</b>"));
+      
+      BUILDIN.put(Buttons.FONTSIZE, ToolbarButton.builder()
+          .icon(FontAwesome.TEXT_HEIGHT)
+          .action("fontSize")
+          .aria("fontsize")
+          .name(Buttons.FONTSIZE.getName())
+          .iconFallback("&#xB1;"));
     }
 
-    public static ToolbarButtonBuilder getBuildin(BuildInButton buildInButton) {
-      return BUILDIN.get(buildInButton);
+    /**
+     * Gets a copy of the buildin button, which might be changed.
+     * @param buildInButton the {@link Buttons} enum
+     * @return a copy of the buildin button builder.
+     */
+    public static ToolbarButtonBuilder getBuildin(Buttons buildInButton) {
+      ToolbarButtonBuilder buildinBuilder = BUILDIN.get(buildInButton);
+      return buildinBuilder.copy();
+    }
+
+    private ToolbarButtonBuilder copy() {
+      ToolbarButtonBuilder b = ToolbarButton.builder(toolbarBuilder);
+      b.icon = this.icon;
+      b.iconText = this.iconText;
+      b.action = this.action;
+      b.customTranslation = this.customTranslation;
+      b.aria = this.aria;
+      if (this.tagNames != null) {
+        b.tagNames = new ArrayList<>(this.tagNames);
+      }
+      b.name = this.name;
+      b.useQueryState = this.useQueryState;
+      b.iconFallback = this.iconFallback;
+      if (this.style != null) {
+        b.style = new HashMap<>(this.style);
+      }
+      if (this.classList != null) {
+        b.classList = new ArrayList<>(this.classList);
+      }
+      if (this.attrs != null) {
+        b.attrs = new HashMap<>(this.attrs);
+      }
+      return b;
     }
 
     private ToolbarBuilder toolbarBuilder;
@@ -253,14 +301,15 @@ public class ToolbarButton implements Serializable {
     private FontIcon icon;
     private String iconText;
     private String iconFallback;
+    private boolean customTranslation;
     private String aria;
     private List<String> tagNames = new ArrayList<>();
     private String action;
     private Map<String, String> style;
-    private boolean useQueryState;
+    private Boolean useQueryState;
     private List<String> classList;
     private Map<String, String> attrs;
-
+    
     public String getName() {
       return name;
     }
@@ -286,6 +335,11 @@ public class ToolbarButton implements Serializable {
     }
 
     public ToolbarButtonBuilder aria(String aria) {
+      return aria(aria, false);
+    }
+    
+    public ToolbarButtonBuilder aria(String aria, boolean customTranslation) {
+      this.customTranslation = customTranslation;
       this.aria = aria;
       return this;
     }
@@ -340,7 +394,13 @@ public class ToolbarButton implements Serializable {
     public ToolbarButtonBuilder(ToolbarBuilder toolbarBuilder) {
       this.toolbarBuilder = toolbarBuilder;
     }
+    
+    public ToolbarButtonBuilder parentBuilder(ToolbarBuilder toolbarBuilder) {
+      this.toolbarBuilder = toolbarBuilder;
+      return this;
+    }
 
+    @Override
     public ToolbarButton build() {
       return new ToolbarButton(this);
     }
@@ -348,6 +408,34 @@ public class ToolbarButton implements Serializable {
     public ToolbarBuilder done() {
       return this.toolbarBuilder;
     }
+
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      if (icon != null) {
+        String contentFA = icon.getHtml();
+        if (iconText != null) {
+          contentFA += iconText;
+        }
+        putNotNull(map, "contentFA", contentFA);
+      }
+      putNotNull(map, "contentDefault", iconFallback);
+      if (customTranslation) {
+        putNotNull(map, "aria", aria);
+      } else {
+        // get buildin translations
+        putNotNull(map, "aria", toolbarBuilder.getOptionsBuilder().getTranslation(aria));
+      }
+      putNotNull(map, "name", name);
+      putNotNull(map, "action", action == null ? name : action);
+      putNotNull(map, "tagNames", tagNames);
+      putNotNull(map, "style", style);
+      putNotNull(map, "useQueryState", useQueryState);
+      putNotNull(map, "classList", classList);
+      putNotNull(map, "attrs", attrs);
+      return map;
+    }
+
   }
 
   @Override

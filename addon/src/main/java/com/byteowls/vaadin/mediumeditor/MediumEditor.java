@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.byteowls.vaadin.mediumeditor.options.Options;
+import com.byteowls.vaadin.mediumeditor.options.MediumEditorTheme;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.ui.AbstractJavaScriptComponent;
@@ -17,7 +18,7 @@ import elemental.json.JsonArray;
  * 
  * @author Michael Oberwasserlechner
  */
-@StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css", "vaadin://mediumeditor/css/default.min.css" })
+@StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css"})
 @JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
 
@@ -38,7 +39,8 @@ public class MediumEditor extends AbstractJavaScriptComponent {
    */
   public void configure(Options.OptionsBuilder builder) {
     if (builder != null) {
-      getState().options = builder.build();
+//      getState().options = builder.build();
+      getState().optionsJson = builder.buildJson();
     }
   }
 
@@ -110,6 +112,17 @@ public class MediumEditor extends AbstractJavaScriptComponent {
    */
   public boolean isFocusOutlineEnabled() {
     return getState().focusOutlineEnabled;
+  }
+
+  /**
+   * Sets the theme of the medium editor. The theme is global and is therefore assigned to all editors in the view.
+   * @param theme the medium editor theme.
+   */
+  public void setTheme(MediumEditorTheme theme) {
+    if (theme == null) {
+      theme = MediumEditorTheme.DEFAULT;
+    }
+    getState().theme = theme;
   }
 
   @SuppressWarnings("serial")

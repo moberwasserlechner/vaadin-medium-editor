@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import com.byteowls.vaadin.mediumeditor.options.Options.OptionsBuilder;
 
+import elemental.json.Json;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+
 public class Anchor implements Serializable {
   
   private static final long serialVersionUID = -9143692744706396347L;
@@ -28,7 +32,7 @@ public class Anchor implements Serializable {
     return new AnchorBuilder(optionsBuilder);
   }
   
-  public static class AnchorBuilder {
+  public static class AnchorBuilder extends AbstractBuilder<Anchor> {
     // reference to parent
     private OptionsBuilder optionsBuilder;
 
@@ -78,8 +82,21 @@ public class Anchor implements Serializable {
       return optionsBuilder;
     }
 
-    Anchor build() {
+    @Override
+    public Anchor build() {
       return new Anchor(this);
+    }
+    
+    @Override
+    public JsonValue buildJson() {
+      JsonObject map = Json.createObject();
+      putNotNull(map, "customClassOption", customClassOption);
+      putNotNull(map, "customClassOptionText", customClassOptionText);
+      putNotNull(map, "linkValidation", linkValidation);
+      putNotNull(map, "placeholderText", placeholderText);
+      putNotNull(map, "targetCheckbox", targetCheckbox);
+      putNotNull(map, "targetCheckboxText", targetCheckboxText);
+      return map;
     }
   }
 
