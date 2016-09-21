@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.0](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.1.0...1.2.0)
+
+* #22 Migrate demo application to spring boot, remodel the ui and add more examples
+* #23 Server side text change is not assigned to editor if it is in readOnly mode 
+* #19 Upgrade to latest medium editor 5.22.0
+* #24 Improve contribution section. Instructions for project setup, running demo application locally,... 
+
 ### [1.1.0](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.0.2...1.1.0)
 
 * #11 Translations for buildin buttons in German and English. Other languages are very welcome.
