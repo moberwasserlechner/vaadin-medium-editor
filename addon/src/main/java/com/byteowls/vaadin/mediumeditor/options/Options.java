@@ -358,7 +358,6 @@ public class Options implements Serializable {
 
         /**
          * Disables the paste handling
-         * @return
          */
         public OptionsBuilder pasteHandlingDisabled() {
             return paste().forcePlainText(false).cleanPastedHTML(false).done();

@@ -20,6 +20,14 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
 javadoc {
     // this fixes a javadoc issue with vaadin packaging which is quite uncommon
     options.addStringOption("sourcepath", "")
