@@ -1,8 +1,8 @@
 plugins {
-    id "fi.jasoft.plugin.vaadin" version "0.10.7"
     id "com.jfrog.bintray" version "1.5"
 }
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'osgi'
 
 sourceCompatibility = 1.7
@@ -14,25 +14,14 @@ eclipse {
     }
 }
 
-vaadin {
-    //widgetset = 'com.byteowls.vaadin.medium.editor.WidgetSet'
-    vaadin.version = "${vaadinVersion}"
-    vaadin.debug = false
-    vaadin.manageWidgetset = true
+dependencies {
+    compile ("com.vaadin:vaadin-server:${vaadinVersion}")
 
-    vaadin.plugin.logToConsole = true
-    vaadin.plugin.eclipseOutputDir = "bin/"
-    vaadin.gwt.gwtSdkFirstInClasspath = true
-
-    addon {
-        author 'Michael Oberwasserlechner'
-        license 'MIT'
-        title 'Medium Editor wrapper'
-    }
+    testCompile "junit:junit:4.12"
 }
 
-dependencies {
-    testCompile "junit:junit:4.12"
+task createAddonPom {
+    pom { artifactId = project.artifactId }.writeTo("${sourceSets.main.output.resourcesDir}/META-INF/maven/com.byteowls/mediumeditor/pom.xml")
 }
 
 jar {
@@ -50,18 +39,6 @@ jar {
         instruction 'Bundle-Description', 'Medium Editor wrapper'
         instruction 'Bundle-DocURL', 'https://github.com/moberwasserlechner/vaadin-medium-editor'
     }
-}
-
-vaadinAddonZip {
-    baseName = project.artifactId
-}
-
-vaadinJavadocJar {
-    baseName = project.artifactId
-}
-
-vaadinSourcesJar {
-    baseName = project.artifactId
 }
 
 // custom tasks for creating source/javadoc jars
@@ -102,15 +79,15 @@ publishing {
 // ##########################
 
 bintray {
-    user = BINTRAY_USER //this usually comes from gradle.properties file in ~/.gradle
-    key = BINTRAY_API_KEY //this usually comes from gradle.properties file in ~/.gradle
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_API_KEY')
 
     // configurations = ['archives'] //When uploading configuration files
     // - OR -
     publications = ['mavenJava'] //When uploading Maven-based publication files
 
     dryRun = false //Whether to run this as dry-run, without deploying
-    publish = false //If version should be auto published after an upload
+    publish = true //If version should be auto published after an upload
 
     // Package configuration. The plugin will use the repo and name properties to check if the package already exists.
     // In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
@@ -118,7 +95,7 @@ bintray {
         repo = 'maven'
         name = 'vaadin-medium-editor'
         //userOrg = 'byteowls' //An optional organization name when the repo belongs to one of the user's orgs
-        desc = 'Vaadin Wrapper for Medium Editor Javascript library'
+        desc = 'Vaadin Add-on for Medium Editor Javascript library'
         websiteUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor'
         issueTrackerUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor/issues'
         vcsUrl = 'https://github.com/moberwasserlechner/vaadin-medium-editor.git'

@@ -1,4 +1,4 @@
-# Vaadin Medium Editor [![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion) [![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N8VS2P9233NJQ) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/LICENSE)
+# Vaadin Medium Editor [![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion) [![PayPal](https://img.shields.io/badge/%24-donate-0CB3EB.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N8VS2P9233NJQ) [![License](https://img.shields.io/badge/license-MIT-B34ED4.svg)](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/master/LICENSE)
 
 Vaadin 7 wrapper for the medium editor javascript library. https://github.com/yabwe/medium-editor
 
@@ -70,17 +70,6 @@ Dependency
     dependencies {
       compile ("com.byteowls:vaadin-medium-editor:1.1.0")
     }
-
-## Prerequisite
-
-### Addon
-* JDK 7 or higher
-* Vaadin 7.4 or higher
-
-### Demo
-* JDK 8 (because of Lambdas)
-* Vaadin 7.4 or higher
-
 ## Usage
 
 ### MediumEditor
@@ -127,7 +116,7 @@ You can overwrite the default options with
         // start configuring the toolbar
         .toolbar()
           // only this buttons should be included
-          .buttons(BuildInButton.BOLD, BuildInButton.ITALIC, BuildInButton.H1, BuildInButton.JUSTIFY_CENTER)
+          .buttons(Buttons.BOLD, Buttons.ITALIC, Buttons.H1, Buttons.JUSTIFY_CENTER)
           // the the german translations for the buttons. be aware of the order
           .buttonTranslations("fett", "kursiv", "Ueberschrift1", "zentriert")
           // configuring the button is done, we want to go back and continue configuring other options
@@ -160,6 +149,18 @@ The MediumEditorField is great for usage within FieldGroups.
 
 The `editor` field is then bound to a FieldGroup and might be configured the same way seen above.
 
+
+## Prerequisite
+
+### Addon
+* JDK 7 or higher
+* Vaadin 7.4 or higher
+
+### Demo
+* JDK 8 (because of Lambdas)
+* Vaadin 7.7.0+
+
+
 ## Missing something?
 
 The Vaadin-Medium-Editor is only a wrapper. So if you have any feature requests or found any bugs in the javascript lib please use Medium Editor's issue tracker https://github.com/yabwe/medium-editor/issues 
@@ -171,7 +172,7 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 1. Fork it
 2. Create your feature branch (`git checkout -b my-feature-or-bug`)
 3. Test your changes to the best of your ability.
-5. Commit your changes (`git commit -am 'Describe feature or bug'`)
+5. Commit your changes (`git commit -m 'Describe feature or bug'`)
 6. Push to the branch (`git push origin my-feature-or-bug`)
 7. Create new Pull Request
 
@@ -181,7 +182,7 @@ Additional languages are very welcome. Thanks in advance :).
 
 ResourceBundles with properties files for the actual translations are used. They are located at
 
-    https://github.com/moberwasserlechner/vaadin-medium-editor/tree/develop/addon/src/main/resources/com/byteowls/vaadin/mediumeditor/options
+    https://github.com/moberwasserlechner/vaadin-medium-editor/tree/master/addon/src/main/resources/com/byteowls/vaadin/mediumeditor/options
  
 
 Supported languages are:
@@ -197,7 +198,7 @@ Supported languages are:
 
 ### Code Style
 
-Please use the sun coding convention with **2 spaces** instead of tabs for indention. Please do not use tabs at all!
+Please use the sun coding convention. Please do not use tabs at all!
 
 ## Demo
 
@@ -211,8 +212,10 @@ Please use the sun coding convention with **2 spaces** instead of tabs for inden
 **Run it yourself**
 
 1. Clone the repository
-2. Run the embedded Tomcat by `./gradlew :demo:run`
-3. It starts at `http://localhost:8080`
+2. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
+3. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
+4. Create a run or debug configuration as a Java Application and use this "com.byteowls.vaadin.mediumeditor.demo.AddonDemoApplication" main class
+3. It starts at `http://localhost:8080/`
 
 **Live Demo**
 
@@ -220,8 +223,8 @@ http://moberwasserlechner.jelastic.servint.net/vaadin-medium-editor/
 
 ## License
 
-MIT. Please see [LICENSE](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/LICENSE).
+MIT. Please see [LICENSE](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/master/LICENSE).
 
 ## Change Log
 
-Please see [CHANGELOG](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/develop/CHANGELOG.md).
+Please see [CHANGELOG](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/master/CHANGELOG.md).
