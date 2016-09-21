@@ -84,6 +84,7 @@ public class MediumEditor extends AbstractJavaScriptComponent {
 
   /**
    * Enable or disables the inline editing.
+   * If readOnly is toggled on a initialised editor the editor's content will be reset to the server side content.
    * @param readOnly If true no editing is possible. Defaults to false.
    */
   public void setReadOnly(boolean readOnly) {

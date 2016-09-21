@@ -20,6 +20,11 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 
+javadoc {
+    // this fixes a javadoc issue with vaadin packaging which is quite uncommon
+    options.addStringOption("sourcepath", "")
+}
+
 task createAddonPom {
     pom { artifactId = project.artifactId }.writeTo("${sourceSets.main.output.resourcesDir}/META-INF/maven/com.byteowls/mediumeditor/pom.xml")
 }
