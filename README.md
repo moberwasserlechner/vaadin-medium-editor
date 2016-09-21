@@ -7,8 +7,22 @@ Vaadin 7 wrapper for the medium editor javascript library. https://github.com/ya
 * MediumEditor component
 * MediumEditorField for simple usage in `com.vaadin.data.fieldgroup.BeanFieldGroup<T>` or `com.vaadin.data.fieldgroup.FieldGroup` 
 * Configure the editor's options with a fluent api
-* Usage of Vaadin's FontAwesome integration, therefore no addional css file must be included. 
-* Localization of build in buttons becomes possible. Although it must be done by yourself. Medium-Editor does not support other languages out of the box.
+* Usage of Vaadin's FontAwesome integration, therefore no addional css file must be included.
+* Localization for English and German 
+* Custom localization by configuration 
+
+## Demo
+
+### Vaadin Addon
+
+* http://moberwasserlechner.jelastic.servint.net/vaadin-medium-editor/
+
+If you want to run the demo application locally, see the [Contribution Section](#run-the-demo-local)
+
+### Medium Editor
+
+* http://yabwe.github.io/medium-editor/
+* https://yabwe.github.io/medium-editor/demo.html
 
 ## Installation
 
@@ -169,57 +183,60 @@ In all other cases please create a issue at https://github.com/moberwasserlechne
 
 ## Contribute
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-feature-or-bug`)
+### Setup Eclipse
+
+1. Fork repo
+2. Open command line
+3. Clone your fork `git@github.com:USERNAME/vaadin-medium-editor.git`
+4. `cd vaadin-medium-editor`
+5. Build eclipse meta data `./gradlew cleanEclipse eclipse`
+6. Open Eclipse
+7. File -> Import... -> General -> Existing Projects into Workspace
+8. Browse to your git repository
+9. Check the option "Search for nested projects"
+10. Check all 3 projects
+11. Press finish
+
+This should take not more than 1-2 minutes. You does not need to use any gradle eclipse plugins. 
+
+### Fix a bug or create a new feature
+
+Please do not mix more than one issue in a feature branch. Each feature/bugfix should have its own branch and its own Pull Request (PR).
+
+1. Create a issue and describe what you want to do at [Issue Tracker](https://github.com/moberwasserlechner/vaadin-medium-editor/issues)
+2. Create your feature branch (`git checkout -b feature/my-feature` or `git checkout -b bugfix/my-bugfix`)
 3. Test your changes to the best of your ability.
+4. Add a demo view to the demo application 
 5. Commit your changes (`git commit -m 'Describe feature or bug'`)
-6. Push to the branch (`git push origin my-feature-or-bug`)
-7. Create new Pull Request
+6. Push to the branch (`git push origin feature/my-feature`)
+7. Create a Github Pull Request
+
+### Run the demo local
+
+The demo application is based on Spring Boot. So its possible to run the Demo as Java Application right out of Eclipse, there is not servlet container needed as Spring Boot has a embedded Tomcat 8 included.
+
+1. Open "Debug Configurations..." dialog
+2. Create a new "Java Application"
+3. Choose the "vaadin-medium-editor-demo" project
+4. Use "com.byteowls.vaadin.mediumeditor.demo.AddonDemoApplication" as Main class
+5. Set `-Dprofile=dev` as VM argument. This ensures that source code panel in the demo is correctly filled while developing.
 
 ### Translations
 
-Additional languages are very welcome. Thanks in advance :).
+Additional languages are very welcome.
 
 ResourceBundles with properties files for the actual translations are used. They are located at
 
     https://github.com/moberwasserlechner/vaadin-medium-editor/tree/master/addon/src/main/resources/com/byteowls/vaadin/mediumeditor/options
  
-
 Supported languages are:
 
 * English (fallback)
 * German
  
-
-### Eclipse
-
-1. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
-2. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
-
 ### Code Style
 
 Please use the sun coding convention. Please do not use tabs at all!
-
-## Demo
-
-### Medium Editor
-
-* http://yabwe.github.io/medium-editor/
-* https://yabwe.github.io/medium-editor/demo.html
-
-### Vaadin Medium Editor
-
-**Run it yourself**
-
-1. Clone the repository
-2. Build eclipse project configs for addon and demo with `./gradlew cleanEclipse eclipse`
-3. In Eclipse open File->Import... and choose General->Existing Projects into Workspace for the root folder
-4. Create a run or debug configuration as a Java Application and use this "com.byteowls.vaadin.mediumeditor.demo.AddonDemoApplication" main class
-3. It starts at `http://localhost:8080/`
-
-**Live Demo**
-
-http://moberwasserlechner.jelastic.servint.net/vaadin-medium-editor/
 
 ## License
 
