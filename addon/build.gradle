@@ -34,10 +34,11 @@ javadoc {
 }
 
 task createAddonPom {
-    pom { artifactId = project.artifactId }.writeTo("${sourceSets.main.output.resourcesDir}/META-INF/maven/com.byteowls/mediumeditor/pom.xml")
+    pom { artifactId = project.artifactId }.writeTo("${sourceSets.main.output.resourcesDir}/META-INF/maven/${project.group}/${project.artifactId}/pom.xml")
 }
 
 jar {
+    createAddonPom
     baseName = project.artifactId
     // Include sources
     sourceSets.main.java.srcDirs.each {
@@ -46,7 +47,10 @@ jar {
 
     manifest {
         // the manifest of the default jar is of type OsgiManifest
-        name = 'vaadin-medium-editor'
+        name = project.artifactId
+        attributes "Vaadin-Package-Version": "1"
+        attributes "Implementation-Title": "Chart.js Add-on"
+        attributes "Implementation-Version": project.version
         instruction 'Import-Package', '!com.google.gwt.*', '!com.vaadin.client.*', '*'
         instruction 'Bundle-Vendor', 'Michael Oberwasserlechner'
         instruction 'Bundle-Description', 'Medium Editor wrapper'
@@ -92,8 +96,8 @@ publishing {
 // ##########################
 
 bintray {
-    user = hasProperty('BINTRAY_USER') ? BINTRAY_USER : '' //this usually comes from gradle.properties file in ~/.gradle
-    key = hasProperty('BINTRAY_API_KEY') ? BINTRAY_API_KEY : '' //this usually comes from gradle.properties file in ~/.gradle
+    user = project.hasProperty('BINTRAY_USER') ? BINTRAY_USER : null //this usually comes from gradle.properties file in ~/.gradle
+    key = project.hasProperty('BINTRAY_API_KEY') ? BINTRAY_API_KEY : null //this usually comes from gradle.properties file in ~/.gradle
 
     // configurations = ['archives'] //When uploading configuration files
     // - OR -

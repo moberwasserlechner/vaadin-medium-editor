@@ -42,7 +42,6 @@ Vaadin runs its own Maven repository and you can download the addon there as wel
 Repository
 
     <repositories>
-      <!-- ... other repository elements ... -->
       <repository>
         <snapshots>
           <enabled>false</enabled>
@@ -56,11 +55,10 @@ Repository
 Dependency
 
     <dependencies>
-      <!-- ... other dependency elements ... -->
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
       </dependency>
     </dependencies>
 
@@ -72,17 +70,11 @@ Repository
     repositories {
       jcenter()
     }
-    // or 
-    repositories {
-      maven {
-        url  "http://jcenter.bintray.com" 
-      }
-    }
      
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.1.0")
+      compile ("com.byteowls:vaadin-medium-editor:1.2.0")
     }
 ## Usage
 
