@@ -1,5 +1,9 @@
 # Changelog
 
+### [1.2.1](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.2.0...1.2.1)
+
+* Same as 1.2.0 but invalid manifest for vaadin directory.
+
 ### [1.2.0](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.1.0...1.2.0)
 
 * #22 Migrate demo application to spring boot, remodel the ui and add more examples
