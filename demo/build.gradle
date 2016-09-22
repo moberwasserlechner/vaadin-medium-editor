@@ -49,8 +49,37 @@ dependencies {
   }
 }
 
+project.ext.vaadinThemeDir = "VAADIN/themes/${vaadinTheme}"
+project.ext.vaadinCssDir = "${project.buildDir}/tmp/styles";
+
+task compileVaadinScss(type: JavaExec) {
+    def styleDir = new File("${vaadinCssDir}")
+    if (!styleDir.exists()) {
+        styleDir.mkdirs()
+    }
+    classpath = sourceSets.main.compileClasspath
+    main = 'com.vaadin.sass.SassCompiler'
+    args = [
+        "src/main/webapp/${project.vaadinThemeDir}/styles.scss",
+        "${vaadinCssDir}/styles.css",
+        "-minify:true",
+        "-compress:true"
+    ]
+    
+}
+
 war {
+    dependsOn compileVaadinScss
     baseName = project.ext.artifactId
+    
+    from ("${vaadinCssDir}") {
+        into vaadinThemeDir
+    }
+    
+    excludes = [
+        "${vaadinThemeDir}/*.scss",
+        "${vaadinThemeDir}/*.cache"
+    ]
 
     // Add sources
     webInf {
