@@ -258,24 +258,24 @@ public class AddonDemoUI extends UI {
         tree.setItemCaptionPropertyId(CAPTION_PROPERTY);
         tree.setItemIconPropertyId(ICON_PROPERTY);
 
-        for (EditorStructure chartType : EditorStructure.values()) {
+        for (EditorStructure editorStructure : EditorStructure.values()) {
             List<MenuItem> children = new ArrayList<>();
             for (MenuItem i : menuItems) {
-                if (i.getType() == chartType) {
+                if (i.getType() == editorStructure) {
                     children.add(i);
                 }
             }
 
-            Item item = treeContainer.addItem(chartType);
-            item.getItemProperty(CAPTION_PROPERTY).setValue(chartType.toString() + " Editor");
-            item.getItemProperty(ICON_PROPERTY).setValue(chartType.getIcon());
-            treeContainer.setChildrenAllowed(chartType, !children.isEmpty());
+            Item item = treeContainer.addItem(editorStructure);
+            item.getItemProperty(CAPTION_PROPERTY).setValue(editorStructure.toString() + " Editor");
+            item.getItemProperty(ICON_PROPERTY).setValue(editorStructure.getIcon());
+            treeContainer.setChildrenAllowed(editorStructure, !children.isEmpty());
 
             for (MenuItem i : children) {
                 Item childItem = treeContainer.addItem(i);
                 childItem.getItemProperty(CAPTION_PROPERTY).setValue(i.getLabel());
                 //childItem.getItemProperty(ICON_PROPERTY).setValue(null);
-                treeContainer.setParent(i, chartType);
+                treeContainer.setParent(i, editorStructure);
                 treeContainer.setChildrenAllowed(i, false);
             }
         }

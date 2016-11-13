@@ -1,18 +1,17 @@
 buildscript {
-    ext {
-        springBootVersion = '1.4.0.RELEASE'
-    }
     repositories {
         mavenCentral()
-        maven { url = "http://maven.vaadin.com/vaadin-addons"}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'eclipse-wtp'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 
 eclipse {
@@ -28,25 +27,26 @@ repositories {
     mavenCentral()
     maven { url = "http://maven.vaadin.com/vaadin-addons"}
 }
+configurations.compile.exclude module: "spring-boot-starter-tomcat"
 
 dependencies {
+  compile("com.vaadin:vaadin-spring-boot-starter:${vaadinSpringVersion}")
+
+  compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
+
   compile project(":addon")
+  compile ("de.java2html:java2html:5.0")
   
   compile "com.thedeanda:lorem:1.2"
   compile ("com.vaadin:vaadin-server:${vaadinVersion}")
   compile ("com.vaadin:vaadin-client-compiled:${vaadinVersion}")
   compile ("com.vaadin:vaadin-themes:${vaadinVersion}")
+  compile ("com.yahoo.platform.yui:yuicompressor:2.4.8")
   
-  compile ("com.vaadin:vaadin-spring-boot:${vaadinSpringVersion}")
-  compile ("com.vaadin:vaadin-spring:${vaadinSpringVersion}")
   compile ("org.vaadin.spring.addons:vaadin-spring-addon-eventbus:${vaadin4SpringVersion}")
   compile ("org.vaadin.spring.extensions:vaadin-spring-ext-boot:${vaadin4SpringVersion}")
-  compile ("de.java2html:java2html:5.0")
-  providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
   testCompile('org.springframework.boot:spring-boot-starter-test')
-  runtime("javax.servlet:jsp-api:2.0"){
-    transitive = false;
-  }
 }
 
 project.ext.vaadinThemeDir = "VAADIN/themes/${vaadinTheme}"
@@ -65,17 +65,17 @@ task compileVaadinScss(type: JavaExec) {
         "-minify:true",
         "-compress:true"
     ]
-    
+
 }
 
 war {
     dependsOn compileVaadinScss
     baseName = project.ext.artifactId
-    
+
     from ("${vaadinCssDir}") {
         into vaadinThemeDir
     }
-    
+
     excludes = [
         "${vaadinThemeDir}/*.scss",
         "${vaadinThemeDir}/*.cache"
@@ -87,4 +87,9 @@ war {
         from sourceSets.main.allJava
        }
     }
+}
+
+bootRun {
+    addResources = true
+    systemProperties System.properties
 }

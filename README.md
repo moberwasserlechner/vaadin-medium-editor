@@ -15,7 +15,7 @@ Vaadin 7 wrapper for the medium editor javascript library. https://github.com/ya
 
 ### Vaadin Addon
 
-* http://moberwasserlechner.jelastic.servint.net/vaadin-medium-editor/
+* http://vaadin-demos.qqjtxeeuih.eu-central-1.elasticbeanstalk.com/mediumeditor/
 
 If you want to run the demo application locally, see the [Contribution Section](#run-the-demo-local)
 
@@ -77,6 +77,8 @@ Dependency
       compile ("com.byteowls:vaadin-medium-editor:1.2.1")
     }
 ## Usage
+
+For more examples please see the [demo app](#vaadin-addon)
 
 ### MediumEditor
   
@@ -212,6 +214,7 @@ The demo application is based on Spring Boot. So its possible to run the Demo as
 3. Choose the "vaadin-medium-editor-demo" project
 4. Use "com.byteowls.vaadin.mediumeditor.demo.AddonDemoApplication" as Main class
 5. Set `-Dprofile=dev` as VM argument. This ensures that source code panel in the demo is correctly filled while developing.
+6. Browse to `http://localhost:5000/mediumeditor/`
 
 ### Translations
 
