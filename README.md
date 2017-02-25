@@ -58,7 +58,7 @@ Dependency
       <dependency>
         <groupId>com.byteowls</groupId>
         <artifactId>vaadin-medium-editor</artifactId>
-        <version>1.2.1</version>
+        <version>replace.with.version</version>
       </dependency>
     </dependencies>
 
@@ -74,7 +74,7 @@ Repository
 Dependency
 
     dependencies {
-      compile ("com.byteowls:vaadin-medium-editor:1.2.1")
+      compile ("com.byteowls:vaadin-medium-editor:replace.with.version")
     }
 ## Usage
 
