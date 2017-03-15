@@ -1,10 +1,9 @@
-package com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n;
+package com.byteowls.vaadin.mediumeditor.demo.ui.views.simple;
 
 import java.util.Locale;
 
 import com.byteowls.vaadin.mediumeditor.MediumEditor;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.AbstractAddonView;
-import com.byteowls.vaadin.mediumeditor.options.MediumEditorTheme;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -12,7 +11,7 @@ import com.vaadin.ui.Component;
 
 @UIScope
 @SpringView
-public class EnglishEditorView extends AbstractAddonView {
+public class AllButtonEditorView extends AbstractAddonView {
 
     private static final long serialVersionUID = 4894923343920891837L;
 
@@ -21,7 +20,6 @@ public class EnglishEditorView extends AbstractAddonView {
 
         MediumEditor editor = new MediumEditor();
         editor.setSizeFull();
-        editor.setTheme(MediumEditorTheme.BOOTSTRAP);
         editor.setFocusOutlineEnabled(false);
         editor.setJsLoggingEnabled(true);
         editor.setContent(Lorem.getHtmlParagraphs(3, 5));
@@ -29,8 +27,8 @@ public class EnglishEditorView extends AbstractAddonView {
                 editor.options()
                 .locale(Locale.ENGLISH)
                 .toolbar()
-                    .allButtons()
-                    .done()
+                .allButtons()
+                .done()
                 .autoLink(true)
                 .imageDragging(false)
                 .done()

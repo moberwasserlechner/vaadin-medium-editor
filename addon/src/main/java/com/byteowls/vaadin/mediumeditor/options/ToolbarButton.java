@@ -177,7 +177,7 @@ public class ToolbarButton implements Serializable {
                     .aria("removeformatting")
                     .action("removeFormat")
                     .name(Buttons.REMOVE_FORMAT.getName())
-                    .iconFallback("<b>X</b>")); 
+                    .iconFallback("<b>X</b>"));
 
             BUILDIN.put(Buttons.QUOTE, ToolbarButton.builder()
                     .icon(VaadinIcons.QUOTE_RIGHT)
@@ -242,6 +242,13 @@ public class ToolbarButton implements Serializable {
                     .tagNames("h6")
                     .name(Buttons.H6.getName())
                     .iconFallback("<b>H6</b>"));
+
+            BUILDIN.put(Buttons.HTML, ToolbarButton.builder()
+                    .icon(VaadinIcons.CODE)
+                    .aria("html")
+                    .action("html")
+                    .name(Buttons.HTML.getName())
+                    .iconFallback("<b>html</b>")); 
 
             // extension
             BUILDIN.put(Buttons.ANCHOR, ToolbarButton.builder()
@@ -331,6 +338,11 @@ public class ToolbarButton implements Serializable {
 
         public ToolbarButtonBuilder iconFallback(String iconFallback) {
             this.iconFallback = iconFallback;
+            return this;
+        }
+
+        public ToolbarButtonBuilder contentDefault(String contentDefault) {
+            this.iconFallback = contentDefault;
             return this;
         }
 

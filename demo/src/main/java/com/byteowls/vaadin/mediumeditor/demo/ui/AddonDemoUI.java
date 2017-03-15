@@ -15,6 +15,7 @@ import com.byteowls.vaadin.mediumeditor.demo.ui.views.AddonView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n.CustomTranslationEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n.EnglishEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n.GermanEditorView;
+import com.byteowls.vaadin.mediumeditor.demo.ui.views.simple.AllButtonEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.simple.NoConfigEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.BeagleThemeView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.BootstrapThemeView;
@@ -62,7 +63,8 @@ public class AddonDemoUI extends UI {
     private static List<MenuItem> menuItems;
     static {
         menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "Start", NoConfigEditorView.class));
+        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "No config", NoConfigEditorView.class));
+        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "All buttons", AllButtonEditorView.class));
         //        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "2 editors", TwoEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "English", EnglishEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "German", GermanEditorView.class));
@@ -184,7 +186,7 @@ public class AddonDemoUI extends UI {
             View currentView = navigator.getCurrentView();
             if (currentView instanceof AddonView) {
                 AddonView addonView = (AddonView) currentView;
-                addonView.setEditorText(Lorem.getParagraphs(2, 5));
+                addonView.setEditorText(Lorem.getHtmlParagraphs(2, 5));
             }
         });
         toolbar.addComponent(loremBtn);
