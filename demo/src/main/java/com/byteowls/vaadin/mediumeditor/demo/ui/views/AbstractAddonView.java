@@ -24,17 +24,17 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class AbstractAddonView extends VerticalLayout implements AddonView {
 
     private static final long serialVersionUID = 2262543995706089766L;
-    
+
     @Autowired
     private UIEventBus eventBus;
-    
+
     protected List<MediumEditor> editors = new ArrayList<>();
 
     @PostConstruct
     public void postConstruct() {
         setSizeFull();
         setMargin(true);
-        
+
         Component layout = getAddonComponent();
         for (MediumEditor editor : editors) {
             editor.addBlurListener(value -> {
@@ -100,7 +100,7 @@ public abstract class AbstractAddonView extends VerticalLayout implements AddonV
             }
         }
     }
-    
+
     @Override
     public void setEditorReadOnly(boolean readOnly) {
         if (this.editors != null) {

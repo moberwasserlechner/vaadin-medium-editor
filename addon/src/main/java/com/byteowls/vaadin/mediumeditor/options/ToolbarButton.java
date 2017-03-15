@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.byteowls.vaadin.mediumeditor.options.Toolbar.ToolbarBuilder;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontIcon;
 
 import elemental.json.Json;
@@ -69,7 +69,7 @@ public class ToolbarButton implements Serializable {
         static {
             BUILDIN = new HashMap<Buttons, ToolbarButtonBuilder>();
             BUILDIN.put(Buttons.BOLD, ToolbarButton.builder()
-                    .icon(FontAwesome.BOLD)
+                    .icon(VaadinIcons.BOLD)
                     .aria("bold")
                     .name(Buttons.BOLD.getName())
                     .tagNames("b", "strong")
@@ -77,7 +77,7 @@ public class ToolbarButton implements Serializable {
                     .useQueryState(true)
                     .iconFallback("<b>B</b>"));
             BUILDIN.put(Buttons.ITALIC, ToolbarButton.builder()
-                    .icon(FontAwesome.ITALIC)
+                    .icon(VaadinIcons.ITALIC)
                     .aria("italic")
                     .name(Buttons.ITALIC.getName())
                     .tagNames("i", "em")
@@ -85,7 +85,7 @@ public class ToolbarButton implements Serializable {
                     .useQueryState(true)
                     .iconFallback("<b><i>I</i></b>"));
             BUILDIN.put(Buttons.UNDERLINE, ToolbarButton.builder()
-                    .icon(FontAwesome.UNDERLINE)
+                    .icon(VaadinIcons.UNDERLINE)
                     .aria("underline")
                     .name(Buttons.UNDERLINE.getName())
                     .tagNames("u")
@@ -93,7 +93,7 @@ public class ToolbarButton implements Serializable {
                     .useQueryState(true)
                     .iconFallback("<b><u>U</u></b>"));
             BUILDIN.put(Buttons.STRIKETHROUGH, ToolbarButton.builder()
-                    .icon(FontAwesome.STRIKETHROUGH)
+                    .icon(VaadinIcons.STRIKETHROUGH)
                     .aria("strikethrough")
                     .name(Buttons.STRIKETHROUGH.getName())
                     .tagNames("strike")
@@ -101,26 +101,26 @@ public class ToolbarButton implements Serializable {
                     .useQueryState(true)
                     .iconFallback("<s>A</s>"));
             BUILDIN.put(Buttons.SUPERSCRIPT, ToolbarButton.builder()
-                    .icon(FontAwesome.SUPERSCRIPT)
+                    .icon(VaadinIcons.SUPERSCRIPT)
                     .aria("superscript")
                     .name(Buttons.SUPERSCRIPT.getName())
                     .tagNames("sup")
                     .iconFallback("<b>x<sup>1</sup></b>"));
             BUILDIN.put(Buttons.SUBSCRIPT, ToolbarButton.builder()
-                    .icon(FontAwesome.SUBSCRIPT)
+                    .icon(VaadinIcons.SUBSCRIPT)
                     .aria("subscript")
                     .name(Buttons.SUBSCRIPT.getName())
                     .tagNames("sub")
                     .iconFallback("<b>x<sub>1</sub></b>"));
             //      BUILDIN.put(Buttons.IMAGE, ToolbarButton.builder()
-            //          .icon(FontAwesome.IMAGE)
+            //          .icon(VaadinIcons.IMAGE)
             //          .aria("image")
             //          .name(Buttons.IMAGE.getName())
             //          .tagNames("img")
             //          .iconFallback("<b>image</b>"));
 
             BUILDIN.put(Buttons.ORDEREDLIST, ToolbarButton.builder()
-                    .icon(FontAwesome.LIST_OL)
+                    .icon(VaadinIcons.LIST_OL)
                     .aria("orderedlist")
                     .action("insertorderedlist")
                     .name(Buttons.ORDEREDLIST.getName())
@@ -128,7 +128,7 @@ public class ToolbarButton implements Serializable {
                     .useQueryState(true)
                     .iconFallback("<b>1.</b>"));
             BUILDIN.put(Buttons.UNORDEREDLIST, ToolbarButton.builder()
-                    .icon(FontAwesome.LIST_UL)
+                    .icon(VaadinIcons.LIST_UL)
                     .aria("unorderedlist")
                     .action("insertunorderedlist")
                     .name(Buttons.UNORDEREDLIST.getName())
@@ -137,50 +137,50 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>&bull;</b>"));
 
             BUILDIN.put(Buttons.INDENT, ToolbarButton.builder()
-                    .icon(FontAwesome.INDENT)
+                    .icon(VaadinIcons.INDENT)
                     .aria("indent")
                     .name(Buttons.INDENT.getName())
                     .iconFallback("<b>&rarr;</b>"));
             BUILDIN.put(Buttons.OUTDENT, ToolbarButton.builder()
-                    .icon(FontAwesome.OUTDENT)
+                    .icon(VaadinIcons.DEINDENT)
                     .aria("outdent")
                     .name(Buttons.OUTDENT.getName())
                     .iconFallback("<b>&larr;</b>"));
 
             BUILDIN.put(Buttons.JUSTIFY_FULL, ToolbarButton.builder()
-                    .icon(FontAwesome.ALIGN_JUSTIFY)
+                    .icon(VaadinIcons.ALIGN_JUSTIFY)
                     .aria("alignjustify")
                     .style("text-align", "justify")
                     .name(Buttons.JUSTIFY_FULL.getName())
                     .iconFallback("<b>J</b>"));
             BUILDIN.put(Buttons.JUSTIFY_LEFT, ToolbarButton.builder()
-                    .icon(FontAwesome.ALIGN_LEFT)
+                    .icon(VaadinIcons.ALIGN_LEFT)
                     .aria("alignleft")
                     .style("text-align", "left")
                     .name(Buttons.JUSTIFY_LEFT.getName())
                     .iconFallback("<b>L</b>"));
             BUILDIN.put(Buttons.JUSTIFY_CENTER, ToolbarButton.builder()
-                    .icon(FontAwesome.ALIGN_CENTER)
+                    .icon(VaadinIcons.ALIGN_CENTER)
                     .aria("aligncenter")
                     .style("text-align", "center")
                     .name(Buttons.JUSTIFY_CENTER.getName())
                     .iconFallback("<b>C</b>"));
             BUILDIN.put(Buttons.JUSTIFY_RIGHT, ToolbarButton.builder()
-                    .icon(FontAwesome.ALIGN_RIGHT)
+                    .icon(VaadinIcons.ALIGN_RIGHT)
                     .aria("alignright")
                     .style("text-align", "right")
                     .name(Buttons.JUSTIFY_RIGHT.getName())
                     .iconFallback("<b>R</b>"));
 
             BUILDIN.put(Buttons.REMOVE_FORMAT, ToolbarButton.builder()
-                    .icon(FontAwesome.ERASER)
+                    .icon(VaadinIcons.ERASER)
                     .aria("removeformatting")
                     .action("removeFormat")
                     .name(Buttons.REMOVE_FORMAT.getName())
                     .iconFallback("<b>X</b>")); 
 
             BUILDIN.put(Buttons.QUOTE, ToolbarButton.builder()
-                    .icon(FontAwesome.QUOTE_RIGHT)
+                    .icon(VaadinIcons.QUOTE_RIGHT)
                     .action("append-blockquote")
                     .aria("blockquote")
                     .tagNames("blockquote")
@@ -188,7 +188,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>&ldquo;</b>"));  
 
             BUILDIN.put(Buttons.PRE, ToolbarButton.builder()
-                    .icon(FontAwesome.CODE)
+                    .icon(VaadinIcons.CODE)
                     .action("append-pre")
                     .aria("preformattedtext")
                     .tagNames("pre")
@@ -196,7 +196,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>0101</b>"));
 
             BUILDIN.put(Buttons.H1, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>1</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>1</sup>")
                     .action("append-h1")
                     .aria("headertype1")
                     .tagNames("h1")
@@ -204,7 +204,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>H1</b>"));
 
             BUILDIN.put(Buttons.H2, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>2</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>2</sup>")
                     .action("append-h2")
                     .aria("headertype2")
                     .tagNames("h2")
@@ -212,7 +212,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>H2</b>"));
 
             BUILDIN.put(Buttons.H3, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>3</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>3</sup>")
                     .action("append-h3")
                     .aria("headertype3")
                     .tagNames("h3")
@@ -220,7 +220,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>H3</b>"));
 
             BUILDIN.put(Buttons.H4, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>4</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>4</sup>")
                     .action("append-h4")
                     .aria("headertype4")
                     .tagNames("h4")
@@ -228,7 +228,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>H4</b>"));
 
             BUILDIN.put(Buttons.H5, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>5</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>5</sup>")
                     .action("append-h5")
                     .aria("headertype5")
                     .tagNames("h5")
@@ -236,7 +236,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>H5</b>"));
 
             BUILDIN.put(Buttons.H6, ToolbarButton.builder()
-                    .icon(FontAwesome.HEADER, "<sup>6</sup>")
+                    .icon(VaadinIcons.HEADER, "<sup>6</sup>")
                     .action("append-h6")
                     .aria("headertype6")
                     .tagNames("h6")
@@ -245,7 +245,7 @@ public class ToolbarButton implements Serializable {
 
             // extension
             BUILDIN.put(Buttons.ANCHOR, ToolbarButton.builder()
-                    .icon(FontAwesome.LINK)
+                    .icon(VaadinIcons.LINK)
                     .action("createLink")
                     .aria("link")
                     .tagNames("a")
@@ -253,7 +253,7 @@ public class ToolbarButton implements Serializable {
                     .iconFallback("<b>#</b>"));
 
             BUILDIN.put(Buttons.FONTSIZE, ToolbarButton.builder()
-                    .icon(FontAwesome.TEXT_HEIGHT)
+                    .icon(VaadinIcons.TEXT_HEIGHT)
                     .action("fontSize")
                     .aria("fontsize")
                     .name(Buttons.FONTSIZE.getName())

@@ -25,16 +25,13 @@ import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.RomanThemeView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.TimThemeView;
 import com.thedeanda.lorem.Lorem;
 import com.vaadin.annotations.Theme;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
-import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Alignment;
@@ -45,7 +42,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -62,15 +58,12 @@ import de.java2html.util.IllegalConfigurationException;
 public class AddonDemoUI extends UI {
 
     private static final long serialVersionUID = -33887281222947647L;
-    
-    private static final String CAPTION_PROPERTY = "caption";
-    private static final String ICON_PROPERTY = "icon";
 
     private static List<MenuItem> menuItems;
     static {
         menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(EditorStructure.SIMPLE, "Start", NoConfigEditorView.class));
-//        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "2 editors", TwoEditorView.class));
+        //        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "2 editors", TwoEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "English", EnglishEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "German", GermanEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "Mixed", CustomTranslationEditorView.class));
@@ -90,11 +83,11 @@ public class AddonDemoUI extends UI {
     @Autowired
     private EventBus.UIEventBus uiEventBus;
 
-    
+
     private Label codeLabel;
     private Label previewLabel;
     private Panel editorComponent;
-    
+
     private boolean readonly;
     private boolean htmlPreview;
 
@@ -107,17 +100,19 @@ public class AddonDemoUI extends UI {
         getPage().setTitle(title);
         Responsive.makeResponsive(this);
         this.uiEventBus.subscribe(this);
-        
+
         VerticalLayout vl = new VerticalLayout();
+        vl.setMargin(false);
+        vl.setSpacing(false);
         vl.setSizeFull();
-        
+
         Label info = new Label("<strong>" + title + "</strong> "
                 + "| Version: <strong>" + env.getProperty("addon.version") + "</strong> "
                 + "| "+env.getProperty("addon.jslib.title")+": <strong>" + env.getProperty("addon.jslib.version") + "</strong> "
                 + "| Vaadin: <strong>" + env.getProperty("addon.vaadin.version") + "</strong> "
                 + "| <a href=\""+env.getProperty("addon.github")+"\">Check it out on Github</a>");
         info.setContentMode(ContentMode.HTML);
-        
+
         CssLayout infoBar = new CssLayout(info);
         infoBar.setWidth(100, Unit.PERCENTAGE);
         infoBar.addStyleName("addon-info-bar");
@@ -131,12 +126,11 @@ public class AddonDemoUI extends UI {
 
         HorizontalSplitPanel splitMenuContent = new HorizontalSplitPanel();
         splitMenuContent.setSizeFull();
-        splitMenuContent.setFirstComponent(buildMenuTree());
+        splitMenuContent.setFirstComponent(buildMenu());
         splitMenuContent.setSecondComponent(splitContentCode);
         splitMenuContent.setSplitPosition(15);
         vl.addComponent(splitMenuContent);
         vl.setExpandRatio(splitMenuContent, 1);
-        
 
         navigator = new Navigator(this, editorComponent);
         navigator.addProvider(viewProvider);
@@ -167,13 +161,16 @@ public class AddonDemoUI extends UI {
 
     private Component buildContent() {
         VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(false);
+        layout.setSpacing(false);
         editorComponent = new Panel();
         editorComponent.setSizeFull();
         editorComponent.addStyleName(ValoTheme.PANEL_BORDERLESS);
-        
+
         HorizontalLayout toolbar = new HorizontalLayout();
+        toolbar.setMargin(false);
         toolbar.setSpacing(true);
-        
+
         Button previewBtn = new Button(this.htmlPreview ? "Html Preview" : "Plain Preview");
         previewBtn.addClickListener(e -> {
             this.htmlPreview = !this.htmlPreview;
@@ -181,17 +178,17 @@ public class AddonDemoUI extends UI {
             previewLabel.setContentMode(htmlPreview ? ContentMode.HTML : ContentMode.TEXT);
         });
         toolbar.addComponent(previewBtn);
-        
+
         Button loremBtn = new Button("Generate Lorem Ispum");
         loremBtn.addClickListener(e -> {
             View currentView = navigator.getCurrentView();
             if (currentView instanceof AddonView) {
                 AddonView addonView = (AddonView) currentView;
-                addonView.setEditorText(Lorem.getParagraphs(2, 4));
+                addonView.setEditorText(Lorem.getParagraphs(2, 5));
             }
         });
         toolbar.addComponent(loremBtn);
-        
+
         Button readonlyBtn = new Button(this.readonly ? "ReadOnly" : "Read/Write");
         readonlyBtn.addClickListener(e -> {
             this.readonly = !this.readonly;
@@ -203,13 +200,13 @@ public class AddonDemoUI extends UI {
             }
         });
         toolbar.addComponent(readonlyBtn);
-        
-        
+
+
         layout.addComponent(toolbar);
         layout.setComponentAlignment(toolbar, Alignment.MIDDLE_CENTER);
         layout.addComponent(editorComponent);
         layout.setExpandRatio(editorComponent, 1);
-        
+
         VerticalSplitPanel contentLayout = new VerticalSplitPanel();
         contentLayout.setFirstComponent(layout);
         contentLayout.setSecondComponent(buildPreview());
@@ -217,10 +214,10 @@ public class AddonDemoUI extends UI {
 
         return contentLayout;
     }
-    
+
     private Component buildPreview() {
         previewLabel = new Label();
-        
+
         Panel panel = new Panel(previewLabel);
         panel.setCaption("Preview");
         panel.setSizeFull();
@@ -228,11 +225,11 @@ public class AddonDemoUI extends UI {
         panel.addStyleName("addon-code");
         return panel;
     }
-    
+
     private Component buildCode() {
         codeLabel = new Label();
         codeLabel.setContentMode(ContentMode.HTML);
-        
+
         Panel codePanel = new Panel(codeLabel);
         codePanel.setSizeFull();
         codePanel.addStyleName(ValoTheme.PANEL_BORDERLESS);
@@ -240,23 +237,14 @@ public class AddonDemoUI extends UI {
         return codePanel;
     }
 
-    @SuppressWarnings("unchecked")
-    private Component buildMenuTree() {
-        Panel treePanel = new Panel();
-        treePanel.setSizeFull();
-        treePanel.addStyleName(ValoTheme.PANEL_BORDERLESS);
-        treePanel.addStyleName("addon-menu");
-        
-        Tree tree = new Tree();
-        tree.setSelectable(true);
+    private Component buildMenu() {
+        Panel menuPanel = new Panel();
+        menuPanel.setSizeFull();
+        menuPanel.addStyleName(ValoTheme.PANEL_BORDERLESS);
+        menuPanel.addStyleName("addon-menu");
 
-        HierarchicalContainer treeContainer = new HierarchicalContainer();
-        treeContainer.addContainerProperty(CAPTION_PROPERTY, String.class, null); // label
-        treeContainer.addContainerProperty(ICON_PROPERTY, Resource.class, null); // icon
-
-        tree.setContainerDataSource(treeContainer);
-        tree.setItemCaptionPropertyId(CAPTION_PROPERTY);
-        tree.setItemIconPropertyId(ICON_PROPERTY);
+        VerticalLayout vl = new VerticalLayout();
+        vl.setWidth(100, Unit.PERCENTAGE);
 
         for (EditorStructure editorStructure : EditorStructure.values()) {
             List<MenuItem> children = new ArrayList<>();
@@ -266,37 +254,25 @@ public class AddonDemoUI extends UI {
                 }
             }
 
-            Item item = treeContainer.addItem(editorStructure);
-            item.getItemProperty(CAPTION_PROPERTY).setValue(editorStructure.toString() + " Editor");
-            item.getItemProperty(ICON_PROPERTY).setValue(editorStructure.getIcon());
-            treeContainer.setChildrenAllowed(editorStructure, !children.isEmpty());
+            Label section = new Label();
+            section.addStyleName(ValoTheme.LABEL_SUCCESS);
+            section.setSizeFull();
+            section.setValue(editorStructure.toString());
+            vl.addComponent(section);
 
-            for (MenuItem i : children) {
-                Item childItem = treeContainer.addItem(i);
-                childItem.getItemProperty(CAPTION_PROPERTY).setValue(i.getLabel());
-                //childItem.getItemProperty(ICON_PROPERTY).setValue(null);
-                treeContainer.setParent(i, editorStructure);
-                treeContainer.setChildrenAllowed(i, false);
-            }
-        }
-
-        // Expand whole tree
-        for (final Object id : tree.rootItemIds()) {
-            tree.expandItem(id);
-        }
-
-        tree.addItemClickListener(e -> {
-            Object itemId = e.getItemId();
-            if (itemId instanceof MenuItem) {
-                MenuItem menuItem = (MenuItem) itemId;
-                if (menuItem.getViewName() != null) {
+            for (MenuItem menuItem : children) {
+                Button b = new Button(menuItem.getLabel());
+                b.setSizeFull();
+                b.addClickListener(e -> {
                     getUI().getNavigator().navigateTo(menuItem.getViewName());
-                }
-
+                    vl.forEach(c -> c.removeStyleName(ValoTheme.BUTTON_PRIMARY));
+                    b.addStyleName(ValoTheme.BUTTON_PRIMARY);
+                });
+                vl.addComponent(b);
             }
-        });
-        treePanel.setContent(tree);
-        return treePanel;
+        }
+        menuPanel.setContent(vl);
+        return menuPanel;
     }
 
     public String getFormattedSourceCode(String sourceCode) {
@@ -316,13 +292,13 @@ public class AddonDemoUI extends UI {
         }
         return sourceCode;
     }
-    
+
     @Override
     public void detach() {
-      uiEventBus.unsubscribe(this);
-      super.detach();
+        uiEventBus.unsubscribe(this);
+        super.detach();
     }
-    
+
     @EventBusListenerMethod
     public void setPreview(ValueChangeEvent event) {
         previewLabel.setValue(event.getValue());

@@ -6,11 +6,11 @@ import com.byteowls.vaadin.mediumeditor.demo.ui.views.AddonView;
 import com.vaadin.spring.internal.Conventions;
 
 public class MenuItem {
-    
+
     private EditorStructure type;
     private String label;
     private String viewName;
-    
+
     public MenuItem(EditorStructure type, String label, Class<? extends AddonView> clazz) {
         super();
         this.type = type;

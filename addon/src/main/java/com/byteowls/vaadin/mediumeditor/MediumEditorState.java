@@ -16,5 +16,6 @@ public class MediumEditorState extends JavaScriptComponentState {
     public Options options;
     public JsonValue optionsJson;
     public MediumEditorTheme theme = MediumEditorTheme.DEFAULT;
+    public boolean readOnly;
 
 }

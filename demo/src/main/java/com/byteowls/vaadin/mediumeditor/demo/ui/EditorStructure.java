@@ -1,16 +1,16 @@
 package com.byteowls.vaadin.mediumeditor.demo.ui;
 
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontIcon;
 
 public enum EditorStructure {
-    
-    SIMPLE(FontAwesome.EDIT), 
-    TRANSLATED(FontAwesome.GLOBE), 
-    THEMED(FontAwesome.PAINT_BRUSH);
-    
+
+    SIMPLE(VaadinIcons.EDIT), 
+    TRANSLATED(VaadinIcons.GLOBE), 
+    THEMED(VaadinIcons.PAINTBRUSH);
+
     FontIcon icon;
-    
+
     private EditorStructure(FontIcon icon) {
         this.icon = icon;
     }
@@ -18,5 +18,5 @@ public enum EditorStructure {
     public FontIcon getIcon() {
         return icon;
     }
-    
+
 }

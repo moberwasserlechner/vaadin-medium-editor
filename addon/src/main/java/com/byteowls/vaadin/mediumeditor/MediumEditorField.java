@@ -1,6 +1,5 @@
 package com.byteowls.vaadin.mediumeditor;
 
-import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 
@@ -23,13 +22,6 @@ public class MediumEditorField extends CustomField<String> {
      */
     public MediumEditorField(String caption) {
         setCaption(caption);
-    }
-
-    @Override
-    @SuppressWarnings("rawtypes")
-    public void setPropertyDataSource(Property newDataSource) {
-        super.setPropertyDataSource(newDataSource);
-        getEditor().setContent(getValue());
     }
 
     @Override
@@ -64,8 +56,13 @@ public class MediumEditorField extends CustomField<String> {
     }
 
     @Override
-    public Class<? extends String> getType() {
-        return String.class;
+    public String getValue() {
+        return getEditor().getState().content;
+    }
+
+    @Override
+    protected void doSetValue(String value) {
+        getEditor().setContent(value);
     }
 
 }
