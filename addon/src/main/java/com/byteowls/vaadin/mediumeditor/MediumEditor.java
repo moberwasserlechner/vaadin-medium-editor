@@ -13,7 +13,7 @@ import com.vaadin.ui.JavaScriptFunction;
 
 import elemental.json.JsonArray;
 
-@StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css"})
+@StyleSheet({"vaadin://mediumeditor/css/medium-editor.min.css", "vaadin://mediumeditor/css/addon.min.css"})
 @JavaScript({ "vaadin://mediumeditor/js/medium-editor.min.js", "vaadin://mediumeditor/js/medium-editor-connector.js" })
 public class MediumEditor extends AbstractJavaScriptComponent {
 

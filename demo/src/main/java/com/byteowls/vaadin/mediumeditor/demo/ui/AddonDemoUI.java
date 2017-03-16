@@ -17,6 +17,7 @@ import com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n.EnglishEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.i18n.GermanEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.simple.AllButtonEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.simple.NoConfigEditorView;
+import com.byteowls.vaadin.mediumeditor.demo.ui.views.simple.WindowEditorView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.BeagleThemeView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.BootstrapThemeView;
 import com.byteowls.vaadin.mediumeditor.demo.ui.views.theme.DefaultThemeView;
@@ -65,7 +66,7 @@ public class AddonDemoUI extends UI {
         menuItems = new ArrayList<>();
         menuItems.add(new MenuItem(EditorStructure.SIMPLE, "No config", NoConfigEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.SIMPLE, "All buttons", AllButtonEditorView.class));
-        //        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "2 editors", TwoEditorView.class));
+        menuItems.add(new MenuItem(EditorStructure.SIMPLE, "Window", WindowEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "English", EnglishEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "German", GermanEditorView.class));
         menuItems.add(new MenuItem(EditorStructure.TRANSLATED, "Mixed", CustomTranslationEditorView.class));
@@ -177,7 +178,7 @@ public class AddonDemoUI extends UI {
         previewBtn.addClickListener(e -> {
             this.htmlPreview = !this.htmlPreview;
             previewBtn.setCaption(this.htmlPreview ? "Html Preview" : "Plain Preview");
-            previewLabel.setContentMode(htmlPreview ? ContentMode.HTML : ContentMode.TEXT);
+            previewLabel.setContentMode(htmlPreview ? ContentMode.HTML : ContentMode.PREFORMATTED);
         });
         toolbar.addComponent(previewBtn);
 
@@ -219,6 +220,7 @@ public class AddonDemoUI extends UI {
 
     private Component buildPreview() {
         previewLabel = new Label();
+        previewLabel.setSizeFull();
 
         Panel panel = new Panel(previewLabel);
         panel.setCaption("Preview");
