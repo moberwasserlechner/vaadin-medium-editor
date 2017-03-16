@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.0](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.2.2...2.0.0)
+
+* #27 Upgrade to Vaadin 8 and Java 8. For Vaadin 7 use 1.2.2
+* #25 Toolbar behind window
+* #28 Upgrade to Medium-Editor JS 5.23.0
+
+### [1.2.2](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.2.1...1.2.2)
+
 ### [1.2.1](https://github.com/moberwasserlechner/vaadin-medium-editor/compare/1.2.0...1.2.1)
 
 * Same as 1.2.0 but invalid manifest for vaadin directory.

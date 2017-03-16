@@ -1,6 +1,8 @@
 # Vaadin Medium Editor [![Bintray](https://img.shields.io/bintray/v/moberwasserlechner/maven/vaadin-medium-editor.svg)](https://bintray.com/moberwasserlechner/maven/vaadin-medium-editor/_latestVersion) [![PayPal](https://img.shields.io/badge/%24-donate-0CB3EB.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N8VS2P9233NJQ) [![License](https://img.shields.io/badge/license-MIT-B34ED4.svg)](https://github.com/moberwasserlechner/vaadin-medium-editor/blob/master/LICENSE)
 
-Vaadin 7 wrapper for the medium editor javascript library. https://github.com/yabwe/medium-editor
+Vaadin 8 wrapper for the medium editor javascript library. https://github.com/yabwe/medium-editor
+
+Important: For Vaadin 7 please use [1.2.2](https://github.com/moberwasserlechner/vaadin-medium-editor/releases/tag/1.2.2)
 
 ## Features
 
@@ -161,12 +163,12 @@ The `editor` field is then bound to a FieldGroup and might be configured the sam
 ## Prerequisite
 
 ### Addon
-* JDK 7 or higher
-* Vaadin 7.4 or higher
+* JDK 8 or higher
+* Vaadin 8.0.0 or higher
 
 ### Demo
 * JDK 8 (because of Lambdas)
-* Vaadin 7.7.0+
+* Vaadin 8.0.x
 
 
 ## Missing something?
